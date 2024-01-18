@@ -1,4 +1,3 @@
 # Chess Game
 
-One-to-one Game 
-**Think twice before your move** :shipit:
+## One-to-one Game :+1: Think twice before your move** :shipit:
