@@ -130,6 +130,8 @@
     <ClCompile Include="Chess.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="King.h" />
+    <ClInclude Include="KingServices.h" />
     <ClInclude Include="System.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
