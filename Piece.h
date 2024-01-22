@@ -11,5 +11,6 @@ public:
 	int row, column;
 	int* dRow, dColumn;
 	Piece(string name, bool color, int row, int column);
+	Piece();
 
 };
