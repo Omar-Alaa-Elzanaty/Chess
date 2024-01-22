@@ -138,6 +138,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bishop.h" />
+    <ClInclude Include="Board.h" />
+    <ClInclude Include="BoardServices.h" />
     <ClInclude Include="IPieceService.h" />
     <ClInclude Include="King.h" />
     <ClInclude Include="Knight.h" />

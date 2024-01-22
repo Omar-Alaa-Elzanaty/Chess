@@ -13,4 +13,3 @@ public:
 	Piece(string name, bool color, int row, int column);
 
 };
-
