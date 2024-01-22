@@ -6,6 +6,7 @@
 #include "Bishop.h"
 #include "Queen.h"
 #include "King.h"
+#include "Pawn.h"
 class Board
 {
 	private:
@@ -45,6 +46,7 @@ class Board
 			}
 
 			for (int i = 1; i <= 8; i++) {
+				board[2][i] = new Pawn;
 				board[2][i]->name = "BPA";
 				board[2][i]->Type = _black;
 				board[2][i]->row = 2;
@@ -79,6 +81,7 @@ class Board
 			}
 
 			for (int i = 1; i <= 8; i++) {
+				board[7][i] = new Pawn;
 				board[7][i]->name = "WPA";
 				board[7][i]->Type = _white;
 				board[7][i]->row = 7;
