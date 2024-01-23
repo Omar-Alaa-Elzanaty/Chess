@@ -3,8 +3,8 @@
 class IPieceService
 {
 public:
-	Board CheckMove(int row, int column);
-	void Move(int row, int column);
-	void DisplayValidMoves();
+	Board AllValidMove(Board _board, Piece _piece);
+	Board MakeMove(int x,int y,Board _board, Piece _piece);
+	bool ValidMove(int x, int y, Board _board, Piece _piece);
 };
 

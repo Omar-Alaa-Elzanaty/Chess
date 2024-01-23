@@ -66,6 +66,9 @@
     <ClInclude Include="BoardServices.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="IBishopService.h">
+      <Filter>Header Files\Services</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Chess.rc">
@@ -73,28 +76,7 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Bishop.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Chess.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="King.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Knight.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Pawn.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Piece.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Queen.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Rook.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -9,7 +9,7 @@ public:
 	string name;
 	string Type;
 	int row, column;
-	int* dRow, dColumn;
+	int* dRow,* dColumn;
 	Piece(string name, bool color, int row, int column);
 	Piece();
 
