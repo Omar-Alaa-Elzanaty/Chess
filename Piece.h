@@ -13,14 +13,15 @@ public:
 	Piece() {
 		name = " .  ";
 	}
-	Piece operator=(const Piece*& cur) {
-		Piece ret;
-		ret.name = name;
-		ret.Type = Type;
-		ret.row = row;
-		ret.column = column;
-		ret.dRow = dRow;
-		ret.dColumn = dColumn;
+
+	Piece* operator=(const Piece*& cur) {
+		Piece *ret = new Piece;
+		ret->name = cur->name;
+		ret->Type = cur->Type;
+		ret->row = cur->row;
+		ret->column = cur->column;
+		ret->dRow = cur->dRow;
+		ret->dColumn = cur->dColumn;
 		return ret;
 	}
 };

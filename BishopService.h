@@ -1,7 +1,7 @@
 #pragma once
 #include<vector>
 #include"IPieceService.h"
-
+#include"BishopService.h"
 class BishopService :public IPieceService
 {
 	
@@ -182,7 +182,6 @@ class BishopService :public IPieceService
         }
     }
 public:
-
 	//virtual bool  CanMove(Board* board, Piece* piece) = 0;
 	//virtual Board AllValidMove(Board* board, Piece* piece) = 0;
 	//virtual Board MakeMove(int x, int y, Board* board, Piece* piece) = 0;
@@ -289,6 +288,13 @@ public:
         }
         else return true;
     }
-
+    Board AllValidMove(Board* board, Piece* piece) {
+        //CanMove(board, piece);
+        GetGeneralBoard(board, piece);
+        return GeneralBoard;
+    }
+    Board MakeMove(int x, int y, Board* board, Piece* piece) {
+        return GeneralBoard;
+    }
 };
 

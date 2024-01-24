@@ -16,7 +16,7 @@ public:
 	string _black = "Black";
 	string _white = "White";
 	vector<vector<Piece*>>board;
-	Board() :board(_rows, vector<Piece*>(_columns, new Piece))
+	Board() :board(_rows, vector<Piece*>(_columns, nullptr))
 	{
 		board[1][1] = new Rook;
 		board[1][1]->name = "BRO ";
@@ -46,6 +46,7 @@ public:
 		}
 
 		for (int i = 1; i <= 8; i++) {
+			break;
 			board[2][i] = new Pawn;
 			board[2][i]->name = "BPA ";
 			board[2][i]->Type = _black;
@@ -81,11 +82,17 @@ public:
 		}
 
 		for (int i = 1; i <= 8; i++) {
+			break;
 			board[7][i] = new Pawn;
 			board[7][i]->name = "WPA ";
 			board[7][i]->Type = _white;
 			board[7][i]->row = 7;
 			board[7][i]->column = i;
+		}
+		for (int i = 1; i <= 8; i++)for (int j = 1; j <= 8; j++) {
+			if (board[i][j] == nullptr) {
+				board[i][j] = new Piece;
+			}
 		}
 	}
 
@@ -93,7 +100,7 @@ public:
 		Board ret;
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
-				ret.board[i][j] = board[i][j];
+				ret.board[i][j] = newBoard->board[i][j];
 			}
 		}
 		return ret;
