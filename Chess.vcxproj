@@ -131,6 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bishop.h" />
+    <ClInclude Include="BishopService.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="BoardServices.h" />
     <ClInclude Include="IPieceService.h" />

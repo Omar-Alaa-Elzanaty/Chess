@@ -21,6 +21,10 @@ public:
             cout << (char)('H' - i) << "    ";
         }
     }
-        
-};
 
+		cout << "  ";
+		for (int i = 0; i < 8; i++) {
+			cout << (char)('H' - i) << "   ";
+		}
+	}
+};

@@ -3,8 +3,8 @@
 class IPieceService
 {
 public:
-	Board CheckMove(int row, int column);
-	void Move(int row, int column);
-	void DisplayValidMoves();
+	virtual bool  CanMove(Board* board, Piece* piece) = 0;
+	virtual Board AllValidMove(Board* board, Piece* piece) = 0;
+	virtual Board MakeMove(int x, int y, Board* board, Piece* piece) = 0;
 };
 
