@@ -63,10 +63,10 @@
     <ClInclude Include="Board.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BoardServices.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="BishopService.h">
+      <Filter>Header Files\Services</Filter>
     </ClInclude>
-    <ClInclude Include="IBishopService.h">
+    <ClInclude Include="BoardServices.h">
       <Filter>Header Files\Services</Filter>
     </ClInclude>
   </ItemGroup>

@@ -89,5 +89,10 @@ class Board
 			}
 
 		}
+
+		Board operator=(const Board* cur) {
+			Board ret;
+			
+		}
 };
 

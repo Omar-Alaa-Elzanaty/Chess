@@ -1,6 +1,5 @@
 #pragma once
 #include "Piece.h"
-#include"IBishopService.h"
 class Bishop :public Piece
 {
 public:
