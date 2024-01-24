@@ -16,8 +16,9 @@ int main()
 	Piece* p = b->board[8][3];
 	BishopService x;
 	
+	cout << "\nDone1!\n";
 	Board xx = x.AllValidMove(b, p);
 	BoardServices().DisplayBoard(&xx);
 	//System::Run();
-	cout << "\nDone!";
+	cout << "\nDone!\n";
 }

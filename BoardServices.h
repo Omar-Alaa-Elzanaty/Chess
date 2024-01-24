@@ -14,7 +14,7 @@ public:
 
                 cout << myBoard->board[myRow][myColumn]->name << " ";
             }
-            cout << "\n";
+            cout << "\n\n";
         }
         cout << "  ";
         for (int i = 0; i < 8; i++) {

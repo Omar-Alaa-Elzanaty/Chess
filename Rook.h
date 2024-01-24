@@ -4,8 +4,7 @@ class Rook :public Piece
 {
 public:
 	Rook() {
-		int dy[] = { -1, 1, 0, 0, -1, 1, 1, -1 };
-		int dx[] = { 0, 0, 1, -1, 1, -1, 1, -1 };
+		
 		this->dRow = new int[4];
 		this->dColumn = new int[4];
 		dRow[0] = -1; dRow[1] = 1;
