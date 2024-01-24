@@ -229,7 +229,7 @@ public:
                 for (; i < 8; i++) {
                     int x = king_pos.first + Knight().dRow[i];
                     int y = king_pos.second + Knight().dColumn[i];
-                    if (board->board[x][y] == &ch) {
+                    if (board->board[x][y] == &ch) {////////////////////////////////////////error
                         if (GeneralBoard.board[x][y]->name[3] == '*')return true;
                     }
                 }
@@ -280,14 +280,15 @@ public:
                 return false;
             }
         }
+
         else if (king_block.size()) {
             char ops = ('W' + 'B') - (piece->name[0]);
             Piece ch = king_block[0];
-
+            if (ch.name == ops + "BI " || ch.name == ops + "QU ") { return true; }
+            return false;
         }
         else return true;
     }
-
 
 };
 
