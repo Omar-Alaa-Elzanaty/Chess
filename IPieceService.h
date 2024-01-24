@@ -3,8 +3,8 @@
 class IPieceService
 {
 public:
-	Board AllValidMove(Board _board, Piece _piece);
-	Board MakeMove(int x,int y,Board _board, Piece _piece);
-	bool ValidMove(int x, int y, Board _board, Piece _piece);
+	virtual bool  CanMove(Board* board, Piece* piece) = 0;
+	virtual Board AllValidMove(Board* board, Piece* piece) = 0;
+	virtual Board MakeMove(int x, int y, Board* board, Piece* piece) = 0;
 };
 

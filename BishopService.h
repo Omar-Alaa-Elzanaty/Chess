@@ -1,0 +1,175 @@
+#pragma once
+
+#include"IPieceService.h"
+
+class BishopService :public IPieceService
+{
+	
+public:
+
+	//virtual bool  CanMove(Board* board, Piece* piece) = 0;
+	//virtual Board AllValidMove(Board* board, Piece* piece) = 0;
+	//virtual Board MakeMove(int x, int y, Board* board, Piece* piece) = 0;
+
+    pair<int, int>king_pos;
+    pair<int, int>KingPos(Board* board, Piece* piece) {
+        int _xking, _yking;
+        for (int i = 1; i <= 8; i++) {// find king position
+            for (int j = 1; j <= 8; j++) {
+                if (board->board[i][j]->name[0] == piece->name[0]) {
+                    _xking = i;
+                    _yking = j;
+                    break;
+                }
+            }
+        }
+        return { _xking,_yking };
+    }
+
+    vector<Piece>KingCheck(Board* board, Piece* piece) {
+        king_pos = KingPos(board, piece);
+        vector<Piece>ret;
+        char ops = piece->name[0];
+        ops = (ops == 'W' ? 'B' : 'W');
+
+        // rook , queen 
+        for (int i = 0; i < 4; i++) {
+            int x = king_pos.first + Rook().dRow[i];
+            int y = king_pos.second + Rook().dColumn[i];
+            while (x <= 8 and x and y <= 8 and y) {
+                string tmp = board->board[x][y]->name;
+                if (tmp[0] != ' ') { // not empty cell
+                    if (tmp[0] == ops) {
+                        if (tmp == ops + "QU" || tmp == ops + "RO") {
+                            ret.push_back(*board->board[x][y]);
+                        }
+                    }
+                    break;
+                }
+                x += Rook().dRow[i];
+                y += Rook().dColumn[i];
+            }
+
+        }
+
+        // bishop , queen 
+        for (int i = 0; i < 4; i++) {
+            int x = king_pos.first + Bishop().dRow[i];
+            int y = king_pos.second + Bishop().dColumn[i];
+            while (x <= 8 and x and y <= 8 and y) {
+                string tmp = board->board[x][y]->name;
+                if (tmp[0] != ' ') { // not empty cell
+                    if (tmp[0] == ops) {
+                        if (tmp == ops + "QU" || tmp == ops + "BI") {
+                            ret.push_back(*board->board[x][y]);
+                        }
+                    }
+                    break;
+                }
+                x += Bishop().dRow[i];
+                y += Bishop().dColumn[i];
+            }
+
+        }
+
+        //knight
+        for (int i = 0; i < 8; i++) {
+            int x = king_pos.first + Knight().dRow[i];
+            int y = king_pos.second + Knight().dColumn[i];
+            if (board->board[x][y]->name[0] != ' ') {
+                if (board->board[x][y]->name == ops + "KN") {
+                    ret.push_back(*board->board[x][y]);
+                }
+                break;
+            }
+        }
+
+        //pawn
+        if (ops == 'B') { // white king 
+            int x = king_pos.first - 1;
+            int y = king_pos.second - 1;
+            if (x <= 8 and x and y and y <= 8 and board->board[x][y]->name == "BPA") {
+                ret.push_back(*board->board[x][y]);
+            }
+            y += 2;
+            if (x <= 8 and x and y and y <= 8 and board->board[x][y]->name == "BPA") {
+                ret.push_back(*board->board[x][y]);
+            }
+        }
+        else { // Black king
+            int x = king_pos.first + 1;
+            int y = king_pos.second + 1;
+            if (x <= 8 and x and y and y <= 8 and board->board[x][y]->name == "WPA") {
+                ret.push_back(*board->board[x][y]);
+            }
+            y -= 2;
+            if (x <= 8 and x and y and y <= 8 and board->board[x][y]->name == "WPA") {
+                ret.push_back(*board->board[x][y]);
+            }
+        }
+
+        return ret;
+    }
+
+    vector<Piece>KingBlock(Board* board, Piece* piece) {
+        king_pos = KingPos(board, piece);
+        vector<Piece>ret;
+        char ops = piece->name[0];
+        ops = (ops == 'W' ? 'B' : 'W');
+
+        // rook , queen 
+        for (int i = 0; i < 4; i++) {
+            int x = king_pos.first + Rook().dRow[i];
+            int y = king_pos.second + Rook().dColumn[i];
+            bool BishopInLine = 0;
+            while (x <= 8 and x and y <= 8 and y) {
+                string tmp = board->board[x][y]->name;
+                if (tmp[0] != ' ') { // not empty cell
+                    if (tmp[0] == ops) {
+                        if (tmp == ops + "QU" || tmp == ops + "RO") {
+                            if (BishopInLine)
+                                ret.push_back(*board->board[x][y]);
+                        }
+                        break;
+                    }
+                    else if (tmp.substr(1) == "BI ")BishopInLine = 1;
+                    else break;
+                }
+                x += Rook().dRow[i];
+                y += Rook().dColumn[i];
+            }
+
+        }
+
+        // bishop , queen 
+        for (int i = 0; i < 4; i++) {
+            int x = king_pos.first + Bishop().dRow[i];
+            int y = king_pos.second + Bishop().dColumn[i];
+            bool BishopInLine = 0;
+            while (x <= 8 and x and y <= 8 and y) {
+                string tmp = board->board[x][y]->name;
+                if (tmp[0] != ' ') { // not empty cell
+                    if (tmp[0] == ops) {
+                        if (tmp == ops + "QU" || tmp == ops + "BI") {
+                            if (BishopInLine)
+                                ret.push_back(*board->board[x][y]);
+                        }
+                        break;
+                    }
+                    else if (tmp.substr(1) == "BI ")BishopInLine = 1;
+                    else break;
+                }
+                x += Bishop().dRow[i];
+                y += Bishop().dColumn[i];
+            }
+
+        }
+
+        return ret;
+    }
+
+
+
+
+};
+
