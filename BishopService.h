@@ -313,12 +313,139 @@ public:
         else return true;
     }
     Board AllValidMove(Board* board, Piece* piece) {
-       CanMove(board, piece);
-       if (king_block.size() == 0 and king_check.size() == 0)return GeneralBoard;
-       return GeneralBoard;
+        CanMove(board, piece);
+        if (king_block.size() == 0 and king_check.size() == 0)
+            return GeneralBoard;
+        Board ret = *board;
+
+        if (king_check.size()) {
+            Piece ch = king_check[0];
+            string Target; Target.push_back('W' + 'B' - piece->name[0]);
+            Target += "PA ";
+            string Target2; Target2 += ('W' + 'B' - piece->name[0]);
+
+            Target2 += "KN ";
+            if (ch.name == Target||ch.name==Target2) {
+                for (int i = 1; i <= 8; i++)for (int j = 1; j <= 8; j++) {
+                    if (ret.board[i][j] == &ch) {/////////////error
+                        ret.board[i][j]->name[3] = '*';
+                        return ret;
+                    }
+                }
+            }
+
+            Target = ""; Target.push_back('W' + 'B' - piece->name[0]);
+            Target += "BI ";
+            Target2 = ('W' + 'B' - piece->name[0]);
+            Target2 += "QU ";
+            if (ch.name == Target || ch.name == Target2) {
+                int i = 0,ok=0;
+                for (; i < 4; i++) {
+                    int x = king_pos.first+Bishop().dRow[i];
+                    int y = king_pos.second+Bishop().dColumn[i];
+                    while (x and x <= 8 and y and y <= 8) {
+                        if (&ch == board->board[x][y]) {///////////////error
+                            ok = 1; break;
+                        }
+                        x += Bishop().dRow[i];
+                        y += Bishop().dColumn[i];
+                    }
+                    if (ok)break;
+                }
+                int x = king_pos.first + Bishop().dRow[i];
+                int y = king_pos.second + Bishop().dColumn[i];
+                while (x and x <= 8 and y and y <= 8) {
+                    if (GeneralBoard.board[x][y]->name[0]!=' ') {
+                        if (GeneralBoard.board[x][y]->name[3] == '*')
+                            ret.board[x][y]->name[3] = '*';
+                    }
+                    else {
+                        if (GeneralBoard.board[x][y]->name[1] == '*')
+                            ret.board[x][y]->name[1] = '*';
+                    }
+                    x += Bishop().dRow[i];
+                    y += Bishop().dColumn[i];
+                }
+                return ret;
+            }
+
+            Target = ""; Target.push_back('W' + 'B' - piece->name[0]);
+            Target += "RO ";
+            Target2 = ('W' + 'B' - piece->name[0]);
+            Target2 += "QU ";
+
+            if (ch.name == Target || ch.name == Target2) {
+                int i = 0, ok = 0;
+                for (; i < 4; i++) {
+                    int x = king_pos.first + Rook().dRow[i];
+                    int y = king_pos.second + Rook().dColumn[i];
+                    while (x and x <= 8 and y and y <= 8) {
+                        if (&ch == board->board[x][y]) {///////////////////////////error
+                            ok = 1; break;
+                        }
+                        x += Rook().dRow[i];
+                        y += Rook().dColumn[i];
+                    }
+                    if (ok)break;
+                }
+                int x = king_pos.first + Rook().dRow[i];
+                int y = king_pos.second + Rook().dColumn[i];
+                while (x and x <= 8 and y and y <= 8) {
+                    if (GeneralBoard.board[x][y]->name[0] != ' ') {
+                        if (GeneralBoard.board[x][y]->name[3] == '*')
+                            ret.board[x][y]->name[3] = '*';
+                    }
+                    else {
+                        if (GeneralBoard.board[x][y]->name[1] == '*')
+                            ret.board[x][y]->name[1] = '*';
+                    }
+                    x += Rook().dRow[i];
+                    y += Rook().dColumn[i];
+                }
+                return ret;
+            }
+        }
+
+        if (king_block.size()) {
+            Piece bl = king_block[0];
+            int i = 0, ok = 0;
+            for (; i < 4; i++) {
+                int x = king_pos.first + Bishop().dRow[i];
+                int y = king_pos.second + Bishop().dColumn[i];
+                while (x and x <= 8 and y and y <= 8) {
+                    if (&bl == board->board[x][y]) {////////////////////error
+                        ok = 1; break;
+                    }
+                    x += Bishop().dRow[i];
+                    y += Bishop().dColumn[i];
+                }
+                if (ok)break;
+            }
+            int x = king_pos.first + Bishop().dRow[i];
+            int y = king_pos.second + Bishop().dColumn[i];
+            while (x and x <= 8 and y and y <= 8) {
+                if (GeneralBoard.board[x][y]->name[0] != ' ') {
+                    if (GeneralBoard.board[x][y]->name[1] != 'B')
+                        ret.board[x][y]->name[3] = '*';
+                }
+                else {
+                    ret.board[x][y]->name[1] = '*';
+                }
+                x += Bishop().dRow[i];
+                y += Bishop().dColumn[i];
+            }
+            return ret;
+        }
     }
     Board MakeMove(int x, int y, Board* board, Piece* piece) {
-        return GeneralBoard;
+        board->board[x][y]->name = board->board[piece->row][piece->column]->name;
+        board->board[x][y]->Type = board->board[piece->row][piece->column]->Type;
+        board->board[x][y]->dRow = board->board[piece->row][piece->column]->dRow;
+        board->board[x][y]->dColumn = board->board[piece->row][piece->column]->dColumn;
+
+        board->board[piece->row][piece->column]->name = " .  ";
+        board->board[piece->row][piece->column]->Type = "";
+        return *board;
     }
 };
 
