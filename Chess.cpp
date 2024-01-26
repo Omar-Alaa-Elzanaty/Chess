@@ -27,15 +27,14 @@
 #include"KnightService.h"
 #include"Knight.h"
 #include"IKnightService.h"
+#include"QueenService.h"
 using namespace std;
 int main()
 {
 	Board* b = new Board;
-	Piece* p = new Piece;
-	p = b->board[8][2];
-	KnightService* x = new KnightService;
-	//
-	Board neww = x->AllValidMove(b,p);
+	QueenService* x = new QueenService;
+	Piece* p = new Queen;
+	p = b->board[8][4];
+	Board neww = x->AllValidMove(b, p);
 	
-	//
 }

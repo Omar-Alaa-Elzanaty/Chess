@@ -138,6 +138,7 @@
     <ClInclude Include="BoardServices.h" />
     <ClInclude Include="IKnightService.h" />
     <ClInclude Include="IPieceService.h" />
+    <ClInclude Include="QueenService.h" />
     <ClInclude Include="King.h" />
     <ClInclude Include="Knight.h" />
     <ClInclude Include="KnightService.h" />

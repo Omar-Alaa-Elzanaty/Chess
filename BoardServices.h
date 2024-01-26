@@ -28,7 +28,7 @@ using namespace std;
 class BoardServices
 {
 public:
-    void DisplayBoard(Board* myBoard) {
+    void DisplayBoard(Board *myBoard) {
         for (int myRow = 1; myRow <= 8; myRow++)
         {
             cout << myRow << " ";

@@ -72,6 +72,12 @@
     <ClInclude Include="KnightService.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BishopService.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QueenService.h">
+      <Filter>Header Files\Services</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Chess.rc">
