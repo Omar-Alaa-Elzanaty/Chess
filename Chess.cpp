@@ -33,9 +33,7 @@ int main()
 	Board* b = new Board;
 	Piece* p = new Piece;
 	p = b->board[8][2];
-	KnightService* x = new KnightService;
-	//
-	Board neww = x->AllValidMove(b,p);
-	
-	//
+	KnightService x;
+	Board xx = x.AllValidMove(b,p);
+	BoardServices().DisplayBoard(&xx);
 }

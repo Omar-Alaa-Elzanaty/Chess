@@ -33,32 +33,34 @@ public:
 	//virtual Board AllValidMove(Board* board, Piece* piece) = 0;
 	//virtual Board MakeMove(int x, int y, Board* board, Piece* piece) = 0;
 	pair<int,int>kingpos;
-	pair<int,int>pos(Board* board,Piece* piece){
-		int idx1 = 0, idx2 = 0;
-		char color = piece->Type[0];
-		for (int i = 1; i <= 8; i++) {
+	pair<int,int>pos(Board* board, Piece* piece) {
+		int xking, yking;
+		char col = piece->name[0];string Target;
+		Target.push_back(col); Target += "KI ";
+		for (int i = 1; i <= 8; i++) {// find king position
 			for (int j = 1; j <= 8; j++) {
-				if (board->board[i][j]->name == (color +"KI ")) {
-					idx1 = i, idx2 = j;
-					break;
+				if (board->board[i][j]->name == Target) {
+					xking = i;
+					yking = j;
+					return {xking,yking};
 				}
 			}
-		}return{idx1,idx2};
+		}return {-1,-1};
 	}
 	bool inboard(int idx1, int idx2) {
 		if (idx1 > 8 or idx1 < 1 or idx2>8 or idx2 < 1)return false;
 		return true;
 	}
-	vector<pair<int,int>>kish(Board* board, Piece* piece) {
-		kingpos = pos(board,piece);
-		char DiffrentColor = 0;
+	vector<pair<int,int>>kish(Board* board,Piece* piece) {
+		kingpos = pos(board,piece);//+
+		string DiffrentColor = "0";
 		vector<pair<int,int>>kishplace;
-		if (piece->Type == "Black")DiffrentColor = 'W';
-		else if (piece->Type == "White")DiffrentColor = 'B';
+		if (piece->Type == "Black")DiffrentColor = "W";
+		else if (piece->Type == "White")DiffrentColor = "B";
 		// my king and opponent rock or queen {
 		for (int i = kingpos.second; i <= 8; i++) {
 			if (board->board[kingpos.first][i]->name == (DiffrentColor + "RO ") or board->board[kingpos.first][i]->name == (DiffrentColor + "QU ")) {
-				kishplace.emplace_back(kingpos.first, i);
+				kishplace.emplace_back(kingpos.first,i);
 				return kishplace;
 			}
 			else if (board->board[kingpos.first][i]->name == " .  ")continue;
@@ -73,73 +75,88 @@ public:
 			else break;
 		}
 		for (int i = kingpos.first; i <= 8; i++) {
-			if (board->board[kingpos.second][i]->name == (DiffrentColor + "RO ") or board->board[kingpos.first][i]->name == (DiffrentColor + "QU ")) {
-				kishplace.emplace_back(kingpos.second, i);
+			if (board->board[i][kingpos.second]->name == (DiffrentColor + "RO ") or board->board[i][kingpos.second]->name == (DiffrentColor + "QU ")) {
+				kishplace.emplace_back(i,kingpos.second);
 				return kishplace;
 			}
-			else if (board->board[kingpos.second][i]->name == " .  ")continue;
+			else if (board->board[i][kingpos.second]->name == " .  ")continue;
 			else break;
 		}
 		for (int i = kingpos.first; i >= 1; i--) {
-			if (board->board[kingpos.second][i]->name == (DiffrentColor + "RO ") or board->board[kingpos.first][i]->name == (DiffrentColor + "QU ")) {
-				kishplace.emplace_back(kingpos.second, i);
+			if (board->board[i][kingpos.second]->name == (DiffrentColor + "RO ") or board->board[i][kingpos.second]->name == (DiffrentColor + "QU ")) {
+				kishplace.emplace_back(i,kingpos.second);
 				return kishplace;
 			}
-			else if (board->board[kingpos.second][i]->name == " .  ")continue;
+			else if (board->board[i][kingpos.second]->name == " .  ")continue;
 			else break;
 		}
 		// }
 		// 
-		// my king and opponent bishop or queen {
-		int idxx = kingpos.first; int idxy = kingpos.second;
+		// my king and opponent bishop or queen{
+		int idxx = kingpos.first;int idxy = kingpos.second;
 		while (idxx < 9 and idxy < 9) {
-			idxx++; idxy++;
-			if (board->board[idxx][idxy]->name == (DiffrentColor + "BI ") or board->board[idxx][idxy]->name == (DiffrentColor + "QU ")) {
-				kishplace.emplace_back(idxx,idxy);
-				return kishplace;
+			idxx++;idxy++;
+			if (idxx < 9 and idxy < 9) {
+				if (board->board[idxx][idxy]->name == (DiffrentColor + "BI ") or (board->board[idxx][idxy]->name == (DiffrentColor + "QU "))) {
+					kishplace.emplace_back(idxx, idxy);
+					return kishplace;
+				}
+				else if (board->board[idxx][idxy]->name == " .  ")continue;
+				else break;
 			}
-			else if (board->board[idxx][idxy]->name == " .  ")continue;
-			else break;
+			else {
+				break;
+			}
 		}
 		idxx = kingpos.first; idxy = kingpos.second;
 		while (idxx > 0 and idxy > 0) {
 			idxx--; idxy--;
-			if (board->board[idxx][idxy]->name == (DiffrentColor + "BI ") or board->board[idxx][idxy]->name == (DiffrentColor + "QU ")) {
-				kishplace.emplace_back(idxx, idxy);
-				return kishplace;
+			if (idxx > 0 and idxy > 0) {
+				if (board->board[idxx][idxy]->name == (DiffrentColor + "BI ") or board->board[idxx][idxy]->name == (DiffrentColor + "QU ")) {
+					kishplace.emplace_back(idxx, idxy);
+					return kishplace;
+				}
+				else if (board->board[idxx][idxy]->name == " .  ")continue;
+				else break;
 			}
-			else if (board->board[idxx][idxy]->name == " .  ")continue;
-			else break;
+			else {
+				break;
+			}
 		}
 		idxx = kingpos.first; idxy = kingpos.second;
 		while (idxx > 0 and idxy < 9) {
 			idxx--; idxy++;
-			if (board->board[idxx][idxy]->name == (DiffrentColor + "BI ") or board->board[idxx][idxy]->name == (DiffrentColor + "QU ")) {
-				kishplace.emplace_back(idxx, idxy);
-				return kishplace;
+			if (idxx > 0 and idxy < 9) {
+				if (board->board[idxx][idxy]->name == (DiffrentColor + "BI ") or board->board[idxx][idxy]->name == (DiffrentColor + "QU ")) {
+					kishplace.emplace_back(idxx, idxy);
+					return kishplace;
+				}
+				else if (board->board[idxx][idxy]->name == " .  ")continue;
+				else break;
 			}
-			else if (board->board[idxx][idxy]->name == " .  ")continue;
 			else break;
 		}
 		idxx = kingpos.first; idxy = kingpos.second;
 		while (idxx < 9 and idxy > 0) {
 			idxx++; idxy--;
-			if (board->board[idxx][idxy]->name == (DiffrentColor + "BI ") or board->board[idxx][idxy]->name == (DiffrentColor + "QU ")) {
-				kishplace.emplace_back(idxx, idxy);
-				return kishplace;
+			if (idxx < 9 and idxy > 0) {
+				if (board->board[idxx][idxy]->name == (DiffrentColor + "BI ") or board->board[idxx][idxy]->name == (DiffrentColor + "QU ")) {
+					kishplace.emplace_back(idxx, idxy);
+					return kishplace;
+				}
+				else if (board->board[idxx][idxy]->name == " .  ")continue;
+				else break;
 			}
-			else if (board->board[idxx][idxy]->name == " .  ")continue;
 			else break;
 		}
 		// }
 		//
 		// my king and opponent knight {
 		idxx = kingpos.first; idxy = kingpos.second;
-		Knight* k = new Knight();
-		for (int i = 1; i <= 8; i++) {
-			int newx = kingpos.first + k->dRow[i];
-			int newy = kingpos.second + k->dColumn[i];
-			if (inboard(newx, newy)) {
+		for (int i = 0; i < 8; i++) {
+			int newx = kingpos.first + Knight().dRow[i];
+			int newy = kingpos.second + Knight().dColumn[i];
+			if (inboard(newx,newy)) {
 				if (board->board[newx][newy]->name == (DiffrentColor + "KN ")) {
 					kishplace.emplace_back(newx,newy);
 					return kishplace;
@@ -150,8 +167,8 @@ public:
 		//
 		// my king and opponent pawn {
 		idxx = kingpos.first - 1; idxy = kingpos.second - 1;
-		if (inboard(idxx, idxy)) {
-			if (DiffrentColor == 'B') {
+		if (inboard(idxx,idxy)) {
+			if (DiffrentColor == "B") {
 				if (board->board[idxx][idxy]->name == (DiffrentColor + "PA ")) {
 					kishplace.emplace_back(idxx, idxy);
 					return kishplace;
@@ -160,7 +177,7 @@ public:
 		}
 		idxx = kingpos.first - 1; idxy = kingpos.second + 1;
 		if (inboard(idxx, idxy)) {
-			if (DiffrentColor == 'B') {
+			if (DiffrentColor == "B") {
 				if (board->board[idxx][idxy]->name == (DiffrentColor + "PA ")) {
 					kishplace.emplace_back(idxx, idxy);
 					return kishplace;
@@ -169,7 +186,7 @@ public:
 		}
 		idxx = kingpos.first + 1; idxy = kingpos.second - 1;
 		if (inboard(idxx, idxy)) {
-			if (DiffrentColor == 'W') {
+			if (DiffrentColor == "W") {
 				if (board->board[idxx][idxy]->name == (DiffrentColor + "PA ")) {
 					kishplace.emplace_back(idxx, idxy);
 					return kishplace;
@@ -178,7 +195,7 @@ public:
 		}
 		idxx = kingpos.first + 1; idxy = kingpos.second + 1;
 		if (inboard(idxx, idxy)) {
-			if (DiffrentColor == 'W') {
+			if (DiffrentColor == "W") {
 				if (board->board[idxx][idxy]->name == (DiffrentColor + "PA ")) {
 					kishplace.emplace_back(idxx, idxy);
 					return kishplace;
@@ -204,14 +221,11 @@ public:
 		return kishplace;
 	}vector<pair<int,int>>canplace;
 	Board AllValidMove(Board* board,Piece* piece){
-		Board show;
-		show = board; 
-		King* kkk = new King;
-		vector<pair<int,int>>kishplace = kish(board,kkk);
+		Board show = *board;
+		vector<pair<int,int>>kishplace = kish(board,piece);
 		if (kishplace.size() == 0) {
-			Knight* k = new Knight;
-			for (int i = 1; i <= 8; i++) {
-				int idxx = piece->row + k->dRow[i], idxy = piece->column + k->dColumn[i];
+			for (int i = 0; i < 8; i++) {
+				int idxx = piece->row + Knight().dRow[i], idxy = piece->column + Knight().dColumn[i];
 				if (inboard(idxx,idxy)) {
 					canplace.emplace_back(idxx,idxy);
 					show.board[idxx][idxy]->name = " *  ";
@@ -220,7 +234,7 @@ public:
 			// show normal place for knight
 		}
 		else {
-			kingpos = pos(board,kkk);
+			kingpos = pos(board,piece);
 			int idxx = piece->row,idxy = piece->column;
 			string validway = "0";
 			for (int i = kingpos.first; i <= 8; i++) {
@@ -358,7 +372,7 @@ public:
 		}return false;
 	}
 	Board MakeMove(int x, int y,Board* board, Piece* piece){
-		Board temp; temp = board;
+		Board temp= *board;
 		if (CanMove(board,piece)){
 			char color = 0;
 			bool put = 0;
