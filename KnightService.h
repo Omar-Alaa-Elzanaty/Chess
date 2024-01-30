@@ -221,11 +221,20 @@ public:
 		return kishplace;
 	}vector<pair<int,int>>canplace;
 	Board AllValidMove(Board* board,Piece* piece){
+		Knight* kn = new Knight;
+		int idxx = piece->row;int idxy = piece->column;
+		set<pair<int,int>>se;
+		for (int i = 1; i <= 8; i++) {
+			idxx = piece->row + kn->dRow[i]; idxy = piece->column + kn->dColumn[i];
+			if (inboard(idxx,idxy)) {
+				se.emplace(idxx,idxy);
+			}
+		}
 		Board show = *board;
 		vector<pair<int,int>>kishplace = kish(board,piece);
 		if (kishplace.size() == 0) {
 			for (int i = 0; i < 8; i++) {
-				int idxx = piece->row + Knight().dRow[i], idxy = piece->column + Knight().dColumn[i];
+				idxx = piece->row + Knight().dRow[i], idxy = piece->column + Knight().dColumn[i];
 				if (inboard(idxx,idxy)) {
 					canplace.emplace_back(idxx,idxy);
 					show.board[idxx][idxy]->name = " *  ";
@@ -235,7 +244,7 @@ public:
 		}
 		else {
 			kingpos = pos(board,piece);
-			int idxx = piece->row,idxy = piece->column;
+			idxx = piece->row,idxy = piece->column;
 			string validway = "0";
 			for (int i = kingpos.first; i <= 8; i++) {
 				for (int j = kingpos.second; j <= 8; j++) {
@@ -296,57 +305,73 @@ public:
 			if (validway == "downright") {
 				for (int i = kingpos.first; i <= idxx; i++) {
 					for (int j = kingpos.second; j <= idxy; j++) {
-						canplace.emplace_back(i,j);
-						show.board[i][j]->name = " *  ";
+						if (se.find({ i,j }) != se.end()) {
+							canplace.emplace_back(i, j);
+							show.board[i][j]->name = " *  ";
+						}
 					}
 				}
 			}
 			else if (validway == "upleft") {
 				for (int i = kingpos.first; i >= idxx; i--) {
 					for (int j = kingpos.second; j >= idxy; j--) {
-						canplace.emplace_back(i,j);
-						show.board[i][j]->name = " *  ";
+						if (se.find({ i,j }) != se.end()) {
+							canplace.emplace_back(i, j);
+							show.board[i][j]->name = " *  ";
+						}
 					}
 				}
 			}
 			else if (validway == "downleft") {
 				for (int i = kingpos.first; i <= idxx; i++) {
 					for (int j = kingpos.second; j >= idxy; j--) {
-						canplace.emplace_back(i,j);
-						show.board[i][j]->name = " *  ";
+						if (se.find({ i,j }) != se.end()) {
+							canplace.emplace_back(i, j);
+							show.board[i][j]->name = " *  ";
+						}
 					}
 				}
 			}
 			else if (validway == "upright") {
 				for (int i = kingpos.first; i >= idxx; i--) {
 					for (int j = kingpos.second; j <= idxy; j++) {
-						canplace.emplace_back(i,j);
-						show.board[i][j]->name = " *  ";
+						if (se.find({ i,j }) != se.end()) {
+							canplace.emplace_back(i, j);
+							show.board[i][j]->name = " *  ";
+						}
 					}
 				}
 			}
 			else if (validway == "up") {
 				for (int i = kingpos.first; i >= idxx; i--) {
-					canplace.emplace_back(i,kingpos.second);
-					show.board[i][kingpos.second]->name = " *  ";
+					if (se.find({ i,kingpos.second }) != se.end()) {
+						canplace.emplace_back(i, kingpos.second);
+						show.board[i][kingpos.second]->name = " *  ";
+					}
 				}
 			}
 			else if (validway == "down") {
 				for (int i = kingpos.first; i <= idxx; i++) {
-					canplace.emplace_back(i, kingpos.second);
-					show.board[i][kingpos.second]->name = " *  ";
+					if (se.find({ i,kingpos.second }) != se.end()) {
+						canplace.emplace_back(i, kingpos.second);
+						show.board[i][kingpos.second]->name = " *  ";
+					}
 				}
 			}
 			else if (validway == "right") {
 				for (int i = kingpos.second; i <= idxy; i++) {
-					canplace.emplace_back(kingpos.first,i);
-					show.board[kingpos.first][i]->name = " *  ";
+					if (se.find({ kingpos.first,i }) != se.end()) {
+						canplace.emplace_back(kingpos.first, i);
+						show.board[kingpos.first][i]->name = " *  ";
+					}
 				}
 			}
 			else if (validway == "left") {
 				for (int i = kingpos.second; i >= idxy; i--) {
-					canplace.emplace_back(kingpos.first, i);
-					show.board[kingpos.first][i]->name = " *  ";
+					if (se.find({ kingpos.first,i }) != se.end()) {
+						canplace.emplace_back(kingpos.first, i);
+						show.board[kingpos.first][i]->name = " *  ";
+					}
 				}
 			}
 			// if you can save the king ok save him
@@ -374,26 +399,30 @@ public:
 	Board MakeMove(int x, int y,Board* board, Piece* piece){
 		Board temp= *board;
 		if (CanMove(board,piece)){
-			char color = 0;
 			bool put = 0;
 			bool put2 = 0;
-			if (piece->Type == "Black")color = 'B';
-			else if (piece->Type == "White")color = 'W';
 			for (int i = 0; i < knightplace.size(); i++) {
 				if (knightplace[i].first == x and knightplace[i].second == y) {
-					temp.board[x][y]->name = (color + "KN ");
 					put2 = 1;
 					break;
 				}
 			}
 			for (int i = 0; i < canplace.size(); i++) {
 				if (canplace[i].first == x and canplace[i].second == y) {
-					temp.board[x][y]->name = (color + "KN ");
 					put = 1;
 					break;
 				}
 			}
 			if (put and put2) {
+				int pre_x = piece->row;
+				int pre_y = piece->column;
+				temp.board[x][y] = piece;
+				temp.board[x][y]->row = x;
+				temp.board[x][y]->column = y;
+				delete piece;
+				piece = new Piece;
+				piece->row = pre_x;
+				piece->column = pre_y;
 				cout << "your knight have moved" << endl;
 			}
 			else {
