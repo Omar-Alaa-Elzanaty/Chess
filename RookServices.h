@@ -98,7 +98,7 @@ private:
 
 		//Knight 
 		Knight* tempKnight = new Knight;
-		for (int i = 1; i < 9; i++) {
+		for (int i = 0; i < 8; i++) {
 			x = _xKing + tempKnight->dRow[i];
 			y = _yKing + tempKnight->dColumn[i];
 			if (myBoard->board[x][y]->name == oKnight)
@@ -177,14 +177,14 @@ private:
 			int x = myPiece->row + Rook().dRow[i];
 			int y = myPiece->column + Rook().dColumn[i];
 			while (x and x < 9 and y and y < 9) {
-				if (myBoard->board[x][y]->name[0]==' ' || myBoard->board[x][y]->name[0] == opponentColor) {
+				if (myBoard->board[x][y]->name[0] == ' ' || myBoard->board[x][y]->name[0] == opponentColor) {
 					myMoves.push_back({ x,y });
 				}
 				else {
 					break;
 				}
-				x+= Rook().dRow[i];
-				y+= Rook().dColumn[i];
+				x += Rook().dRow[i];
+				y += Rook().dColumn[i];
 			}
 		}
 		return myMoves;
@@ -192,15 +192,15 @@ private:
 public:
 	bool CanMove(Board* board, Piece* piece)
 	{
-		vector<pair<int, int>>myKingChecks = Check(board,piece);
+		vector<pair<int, int>>myKingChecks = Check(board, piece);
 		vector<Piece*>myBlocks = KingBlock(board, piece);
 
 		if (myBlocks.size() > 1 || myKingChecks.size() > 1)
 			return 0;
 
-		if (myBlocks.size() &&  myKingChecks.size())
+		if (myBlocks.size() && myKingChecks.size())
 			return 0;
-		
+
 		char opponentColor = (piece->name[0] == 'W' ? 'B' : 'W');
 		string oRook = opponentColor + "RO ";
 		string oBishop = opponentColor + "BI ";
@@ -219,9 +219,9 @@ public:
 				Rook* tempRook = new Rook;
 				for (int i = 0; i < 4; i++) {
 					x = _xRook + tempRook->dRow[i];
-				    y = _yRook + tempRook->dColumn[i];
-					while (x and x<9 and y and y<9) {
-						if(x == myBlocks[0]->row and y == myBlocks[0]->column){
+					y = _yRook + tempRook->dColumn[i];
+					while (x and x < 9 and y and y < 9) {
+						if (x == myBlocks[0]->row and y == myBlocks[0]->column) {
 							return 1;
 						}
 						x += tempRook->dRow[i];
@@ -231,11 +231,11 @@ public:
 				return 0;
 			}
 		}
-		if (myKingChecks.size()){
+		if (myKingChecks.size()) {
 			vector<vector<Piece>>myTempBoard;
-			for (int i = 1; i < 9; i++)
+			for (int i = 0; i < 9; i++)
 			{
-				for (int j = 1; j < 9; j++) {
+				for (int j = 0; j < 9; j++) {
 					myTempBoard[i][j] = *(board->board[i][j]);
 				}
 			}
@@ -246,7 +246,7 @@ public:
 				x = _xRook + tempRook->dRow[i];
 				y = _yRook + tempRook->dColumn[i];
 				while (x and x < 9 and y and y < 9) {
-					if (board->board[x][y]->name[0]== opponentColor) {
+					if (board->board[x][y]->name[0] == opponentColor) {
 						myTempBoard[x][y].name[3] = '*';
 						break;
 					}
@@ -270,8 +270,8 @@ public:
 
 			if (board->board[idxRow][idxCol]->name == oRook) {
 				for (int i = 0; i < 4; i++) {
-					x = idxXKing+tempRook->dRow[i];
-					y = idxYKing +tempRook->dColumn[i];
+					x = idxXKing + tempRook->dRow[i];
+					y = idxYKing + tempRook->dColumn[i];
 					while (x and x < 9 and y and y < 9) {
 						if (myTempBoard[x][y].name[0] != ' ') {
 							if (myTempBoard[x][y].name[3] == '*') {
@@ -285,9 +285,9 @@ public:
 				return 0;
 			}
 
-			x = _xRook;y = _yRook;
+			x = _xRook; y = _yRook;
 
-		    if(board->board[idxRow][idxCol]->name == oBishop) {
+			if (board->board[idxRow][idxCol]->name == oBishop) {
 				Bishop* tempBishop = new Bishop;
 				for (int i = 0; i < 4; i++) {
 					x = idxXKing + tempBishop->dRow[i];
@@ -307,7 +307,7 @@ public:
 
 			x = _xRook; y = _yRook;
 
-		    if (board->board[idxRow][idxCol]->name == oKnight) {
+			if (board->board[idxRow][idxCol]->name == oKnight) {
 				return 0;
 			}
 
@@ -334,170 +334,9 @@ public:
 			if (board->board[idxRow][idxCol]->name == oPawn) {
 				return 0;
 			}
-					
+
 		}
 	}
-
-	Board AllValidMove(Board* myBoard, Piece* myPiece) {//not functioning properly 
-		Board myTempBoard = *myBoard;
-		if (CanMove(myBoard, myPiece)) 
-		{
-			vector<pair<int, int>>myKingChecks = Check(myBoard, myPiece);
-			vector<Piece*>myBlocks = KingBlock(myBoard, myPiece);
-
-			vector<pair<int, int>>myMoves;
-			vector<pair<int, int>>myValidMoves = GetAllMoves(myBoard, myPiece);
-
-			char opponentColor = (myPiece->name[0] == 'W' ? 'B' : 'W');
-			string oRook = opponentColor + "RO ";
-			string oBishop = opponentColor + "BI ";
-			string oKnight = opponentColor + "KN ";
-			string oQueen = opponentColor + "QU ";
-			string oPawn = opponentColor + "PA ";
-
-			if (myKingChecks.size()) {
-				int ox = myKingChecks[0].first, oy = myKingChecks[0].second;
-				int idxXKing = GetKing(myBoard, myPiece).first;
-				int idxYKing = GetKing(myBoard, myPiece).second;
-
-				if (myBoard->board[ox][oy]->name == oRook) {
-					Rook* tempRook = new Rook;
-					for (int i = 0; i < 4; i++) {
-						int x = idxXKing + tempRook->dRow[i];
-						int y = idxYKing + tempRook->dColumn[i];
-						vector<pair<int, int>>temp;
-						bool ok = 0;
-						while (x and x < 9 and y and y < 9) {
-							temp.push_back({ x,y });
-							if (x == ox and y == oy) {
-								ok = 1;
-								break;
-							}
-							x += tempRook->dRow[i];
-							y+= tempRook->dColumn[i];
-						}
-						if (ok) {
-							myMoves = temp;
-							break;
-						}
-						else {
-							temp.clear();
-						}
-					}
-				}
-				else if (myBoard->board[ox][oy]->name == oBishop){
-					Bishop* tempBishop = new Bishop;
-					for (int i = 0; i < 4; i++) {
-						int x = idxXKing + tempBishop->dRow[i];
-						int y = idxYKing + tempBishop->dColumn[i];
-						vector<pair<int, int>>temp;
-						bool ok = 0;
-						while (x and x < 9 and y and y < 9) {
-							temp.push_back({ x,y });
-							if (x == ox and y == oy) {
-								ok = 1;
-								break;
-							}
-							x += tempBishop->dRow[i];
-							y += tempBishop->dColumn[i];
-						}
-						if (ok) {
-							myMoves = temp;
-							break;
-						}
-						else {
-							temp.clear();
-						}
-					}
-				}
-				else if (myBoard->board[ox][oy]->name == oQueen){
-					Queen* tempQueen = new Queen;
-					for (int i = 0; i < 9; i++) {
-						int x = idxXKing + tempQueen->dRow[i];
-						int y = idxYKing + tempQueen->dColumn[i];
-						vector<pair<int, int>>temp;
-						bool ok = 0;
-						while (x and x < 9 and y and y < 9) {
-							temp.push_back({ x,y });
-							if (x == ox and y == oy) {
-								ok = 1;
-								break;
-							}
-							x += tempQueen->dRow[i];
-							y += tempQueen->dColumn[i];
-						}
-						if (ok) {
-							myMoves = temp;
-							break;
-						}
-						else {
-							temp.clear();
-						}
-					}
-				}
-				for (int i = 0; i < myValidMoves.size(); i++) {
-					for (int j = 0; j < myMoves.size(); j++) {
-						if (myValidMoves[i] == myMoves[j]) {
-							if (myTempBoard.board[myValidMoves[i].first][myValidMoves[i].second]->name[0] == ' ')
-								myTempBoard.board[myValidMoves[i].first][myValidMoves[i].second]->name[1] = '*';
-							else if(myTempBoard.board[myValidMoves[i].first][myValidMoves[i].second]->name[0]==opponentColor)
-								myTempBoard.board[myValidMoves[i].first][myValidMoves[i].second]->name[3] = '*';
-
-						}
-					}
-				}
-				return myTempBoard;
-		    }
-			if (myBlocks.size()) {
-				Queen* tempQueen = new Queen;
-				for (int i = 0; i < 9; i++) {
-					int x = myPiece->row + tempQueen->dRow[i];
-					int y = myPiece->column + tempQueen->dColumn[i];
-					vector<pair<int, int>>temp;
-					bool ok = 0;
-					while (x and x < 9 and y and y < 9) {
-						temp.push_back({ x,y });
-						if (x == myBlocks[0]->row and y == myBlocks[0]->column) {
-							ok = 1;
-							break;
-						}
-						x += tempQueen->dRow[i];
-						y += tempQueen->dColumn[i];
-					}
-					if (ok) {
-						myMoves = temp;
-						break;
-					}
-					else {
-						temp.clear();
-					}
-				}
-				for (int i = 0; i < myValidMoves.size(); i++) {
-					for (int j = 0; j < myMoves.size(); j++) {
-						if (myValidMoves[i] == myMoves[j]) {
-							if (myTempBoard.board[myValidMoves[i].first][myValidMoves[i].second]->name[0] == ' ')
-								myTempBoard.board[myValidMoves[i].first][myValidMoves[i].second]->name = " * ";
-							else if (myTempBoard.board[myValidMoves[i].first][myValidMoves[i].second]->name[0] == opponentColor)
-								myTempBoard.board[myValidMoves[i].first][myValidMoves[i].second]->name[3] = '*';
-						}
-					}
-				}
-				return myTempBoard;
-			}
-
-			for (int i = 0; i < myValidMoves.size(); i++) {
-				if (myTempBoard.board[myValidMoves[i].first][myValidMoves[i].second]->name[0]==' ')
-					myTempBoard.board[myValidMoves[i].first][myValidMoves[i].second]->name = " * ";
-				else if (myTempBoard.board[myValidMoves[i].first][myValidMoves[i].second]->name[0] == opponentColor)
-					myTempBoard.board[myValidMoves[i].first][myValidMoves[i].second]->name[3] = '*';
-			}
-		}
-		return myTempBoard;
-	}
-
-	Board MakeMove(int x, int y, Board* myBoard, Piece* piece)
-	{
-		
-	}
+	
 };
 
