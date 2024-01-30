@@ -32,9 +32,9 @@ using namespace std;
 int main()
 {
 	Board* b = new Board;
-	QueenService* x = new QueenService;
-	Piece* p = new Queen;
+	Piece* p = new Piece;
 	p = b->board[8][4];
-	Board neww = x->AllValidMove(b, p);
-	
+	QueenService x;
+	Board xx = x.AllValidMove(b, p);
+	BoardServices().DisplayBoard(&xx);
 }
