@@ -5,19 +5,20 @@
 class RookServices : public IPieceService
 {
 private:
-	vector<pair<int, int>>PossiblePos;
 	pair<int, int> GetKing(Board* myBoard, Piece* myPiece)
 	{
 		char color = myPiece->name[0];
+		string myKing = "XKI ";
+		myKing[0] = color;
 		for (int i = 1; i < 9; i++) {
 			for (int j = 1; j < 9; j++) {
-				if (myBoard->board[i][j]->name == color + "KI ")
+				if (myBoard->board[i][j]->name == myKing)
 				{
 					return { i, j };
 				}
 			}
 		}
-		return { 0,0 };
+		return {0,0};
 	}
 
 	vector<pair<int, int>> Check(Board* myBoard, Piece* myPiece)
@@ -25,59 +26,32 @@ private:
 		vector<pair<int, int>> CheckPos;
 
 		char opponentColor = (myPiece->name[0] == 'W' ? 'B' : 'W');
-		string oRook = opponentColor + "RO ";
-		string oBishop = opponentColor + "BI ";
-		string oKnight = opponentColor + "KN ";
-		string oQueen = opponentColor + "QU ";
-		string oPawn = opponentColor + "PA ";
+		string oRook = "XRO ", oBishop = "XBI ", oQueen = "XQU ", oKnight = "XKN ", oPawn = "XPA ";
+		oRook[0] = opponentColor; oBishop[0] = opponentColor; oQueen[0] = opponentColor; oKnight[0] = opponentColor;
+		oPawn[0] = opponentColor;
 
 		pair<int, int> myKingPos = GetKing(myBoard, myPiece);
-		int _xKing = myKingPos.first, _yKing = myKingPos.second;
+		int _xKing = myKingPos.first, _yKing = myKingPos.second,x,y;
 
 
 		//rook and queen
-		for (int i = _xKing - 1; i > 0; i--) {
-			if (myBoard->board[i][_yKing]->name == opponentColor + "RO " || myBoard->board[i][_yKing]->name == opponentColor + "QU ")
-			{
-				CheckPos.push_back({ i,_yKing });
-				break;
+		Rook* tempRook = new Rook;
+		for (int i = 0; i < 4; i++) {
+			x = _xKing + tempRook->dRow[i];
+			y = _yKing + tempRook->dColumn[i];
+			while (x and x < 9 and y and y < 9) {
+				if (myBoard->board[x][y]->name == oRook || myBoard->board[x][y]->name == oQueen) {
+					CheckPos.push_back({ x,y });
+					break;
+				}
+				else if (myBoard->board[x][y]->name[0] != ' ')
+					break;
+				x += tempRook->dRow[i];
+				y += tempRook->dColumn[i];
 			}
-			else if (myBoard->board[i][_yKing]->name[0] != ' ')
-				break;
-		}
-
-		for (int i = _xKing + 1; i < 9; i++) {
-			if (myBoard->board[i][_yKing]->name == oRook || myBoard->board[i][_yKing]->name == oQueen)
-			{
-				CheckPos.push_back({ i,_yKing });
-				break;
-			}
-			else if (myBoard->board[i][_yKing]->name[0] != ' ')
-				break;
-		}
-
-		for (int j = _yKing - 1; j > 0; j--) {
-			if (myBoard->board[_xKing][j]->name == oRook || myBoard->board[_xKing][j]->name == oQueen)
-			{
-				CheckPos.push_back({ _xKing,j });
-				break;
-			}
-			else if (myBoard->board[_xKing][j]->name[0] != ' ')
-				break;
-		}
-
-		for (int j = _yKing + 1; j < 9; j++) {
-			if (myBoard->board[_xKing][j]->name == oRook || myBoard->board[_xKing][j]->name == oQueen)
-			{
-				CheckPos.push_back({ _xKing,j });
-				break;
-			}
-			else if (myBoard->board[_xKing][j]->name[0] != ' ')
-				break;
 		}
 
 		//queen and bishop
-		int x = _xKing - 1, y = _yKing - 1;
 		Bishop* tempBishop = new Bishop;
 		for (int i = 0; i < 4; i++)
 		{
@@ -136,15 +110,15 @@ private:
 		return CheckPos;
 	}
 
-	vector<Piece*> KingBlock(Board* myBoard, Piece* myPiece)
+	vector<Piece*> Block(Board* myBoard, Piece* myPiece)
 	{
 		int _xKing = GetKing(myBoard, myPiece).first;
 		int _yKing = GetKing(myBoard, myPiece).second;
 		vector<Piece*>Blocks;
 
 		char opponentColor = (myPiece->name[0] == 'W' ? 'B' : 'W');
-		string oBishop = opponentColor + "BI ";
-		string oQueen = opponentColor + "QU ";
+		string  oBishop = "XBI ", oQueen = "XQU ";
+	    oBishop[0] = opponentColor; oQueen[0] = opponentColor;
 		Bishop* tempBishop = new Bishop;
 
 		int x = _xKing, y = _yKing;
@@ -153,7 +127,7 @@ private:
 			x = _xKing + tempBishop->dRow[i];
 			y = _yKing + tempBishop->dColumn[i];
 			while (x and x < 9 and y and y < 9) {
-				if (myBoard->board[x][y]->name == myPiece->name) {
+				if (x == myPiece->row and y == myPiece->column) {
 					FoundRook = 1;
 				}
 				else if ((myBoard->board[x][y]->name == oBishop || myBoard->board[x][y]->name == oQueen) and FoundRook) {
@@ -169,174 +143,230 @@ private:
 		}
 		return Blocks;
 	}
+	vector<Piece*>RookBlocks(Board* myBoard, Piece* myPiece)
+	{
+		int _xKing = GetKing(myBoard, myPiece).first;
+		int _yKing = GetKing(myBoard, myPiece).second;
+		vector<Piece*>Blocks;
 
-	vector<pair<int, int>> GetAllMoves(Board* myBoard, Piece* myPiece) {
 		char opponentColor = (myPiece->name[0] == 'W' ? 'B' : 'W');
-		vector<pair<int, int>> myMoves;
+		string oRook = "XRO ", oQueen = "XQU ";
+		oRook[0] = opponentColor; oQueen[0] = opponentColor;
+		Rook* tempRook = new Rook;
+
+		int x = _xKing, y = _yKing;
+		bool FoundRook = 0;
 		for (int i = 0; i < 4; i++) {
-			int x = myPiece->row + Rook().dRow[i];
-			int y = myPiece->column + Rook().dColumn[i];
+			x = _xKing + tempRook->dRow[i];
+			y = _yKing + tempRook->dColumn[i];
 			while (x and x < 9 and y and y < 9) {
-				if (myBoard->board[x][y]->name[0] == ' ' || myBoard->board[x][y]->name[0] == opponentColor) {
-					myMoves.push_back({ x,y });
+				if (x==myPiece->row and y==myPiece->column) {
+					FoundRook = 1;
+				}
+				else if ((myBoard->board[x][y]->name == oRook || myBoard->board[x][y]->name == oQueen) and FoundRook) {
+					Blocks.push_back(myBoard->board[x][y]);
+					break;
+				}
+				else if (myBoard->board[x][y]->name != " . ") {
+					break;
+				}
+				x += tempRook->dRow[i];
+				y += tempRook->dColumn[i];
+			}
+		}
+		return Blocks;
+
+	}
+	vector<vector<string>>GetGeneralBoard(Board* myBoard, Piece* myPiece)
+	{
+		vector<vector<string>>tempBoard(9, vector<string>(9));
+		for (int i = 1; i < 9; i++) {
+			for (int j = 1; j < 9; j++) {
+				tempBoard[i][j] = myBoard->board[i][j]->name;
+			}
+		}
+		char opponentColor = (myPiece->name[0] == 'W' ? 'B' : 'W');
+
+		int _xRook = myPiece->row , _yRook = myPiece->column;
+
+		Rook* tempRook = new Rook;
+		for (int i = 0; i < 4; i++)
+		{
+			int x = _xRook + tempRook->dRow[i];
+			int y = _xRook + tempRook->dColumn[i];
+			while (x and x < 9 and y and y < 9) {
+				if (tempBoard[x][y][0] == opponentColor) {
+					tempBoard[x][y][3] = '*';
+					break;
+				}
+				else if (tempBoard[x][y][0] == ' ') {
+					tempBoard[x][y][1] = '*';
 				}
 				else {
 					break;
 				}
-				x += Rook().dRow[i];
-				y += Rook().dColumn[i];
+				x+= tempRook->dRow[i];
+				y+= tempRook->dColumn[i];
 			}
 		}
-		return myMoves;
+		return tempBoard;
+
 	}
-public:
-	bool CanMove(Board* board, Piece* piece)
+	public:
+	//CanMove(Board* myBoard , Piece* myPiece) : bool
+	bool CanMove(Board* myBoard, Piece* myPiece)
 	{
-		vector<pair<int, int>>myKingChecks = Check(board, piece);
-		vector<Piece*>myBlocks = KingBlock(board, piece);
+		vector<pair<int, int>>myChecks = Check(myBoard, myPiece);
+		vector<Piece*>myBlocks = Block(myBoard, myPiece);
+		vector<Piece*>myRookBlocks = RookBlocks(myBoard, myPiece);
 
-		if (myBlocks.size() > 1 || myKingChecks.size() > 1)
+		if (myChecks.size() > 1 || myBlocks.size())
 			return 0;
+		
+		if (myRookBlocks.size())
+			return 1;
 
-		if (myBlocks.size() && myKingChecks.size())
+		char opponentColor = (myPiece->name[0] == 'W' ? 'B' : 'W');
+		string oRook = "XRO ", oBishop = "XBI ", oQueen = "XQU ", oKnight = "XKN ", oPawn = "XPA ";
+		oRook[0] = opponentColor; oBishop[0] = opponentColor; oQueen[0] = opponentColor; oKnight[0] = opponentColor;
+		oPawn[0] = opponentColor;
+
+		vector<vector<string>>tempBoard = GetGeneralBoard(myBoard, myPiece);
+		bool validPos = 0;
+		for (int i = 1; i < 9; i++) {
+			for (int j = 1; j < 9; j++) {
+				if (tempBoard[i][j][0] == ' ' and tempBoard[i][j][1] == '*') {
+					validPos = 1;
+					break;
+				}
+				else if (tempBoard[i][j][0] == opponentColor and tempBoard[i][j][3] == '*') {
+					validPos = 1;
+					break;
+				}
+			}
+		}
+
+		if (!validPos) {
 			return 0;
+		}
 
-		char opponentColor = (piece->name[0] == 'W' ? 'B' : 'W');
-		string oRook = opponentColor + "RO ";
-		string oBishop = opponentColor + "BI ";
-		string oKnight = opponentColor + "KN ";
-		string oQueen = opponentColor + "QU ";
-		string oPawn = opponentColor + "PA ";
-		int _xRook = piece->row, _yRook = piece->column;
 
-		if (myBlocks.size() == 1) {
-			if (myBlocks[0]->name == oBishop) {
+		int _xKing = GetKing(myBoard, myPiece).first;
+		int _yKing = GetKing(myBoard, myPiece).second;
+
+		if(myChecks.size()){
+			Piece* temp = myBoard->board[myChecks[0].first][myChecks[0].second];
+			if (temp->name == oPawn || temp->name == oKnight) {
 				return 0;
 			}
-			else
-			{
-				int x = _xRook, y = _yRook;
-				Rook* tempRook = new Rook;
+
+			if (temp->name == oRook) {
+				int idx = -1;
 				for (int i = 0; i < 4; i++) {
-					x = _xRook + tempRook->dRow[i];
-					y = _yRook + tempRook->dColumn[i];
+					int x = _xKing + Rook().dRow[i];
+					int y = _yKing + Rook().dColumn[i];
 					while (x and x < 9 and y and y < 9) {
-						if (x == myBlocks[0]->row and y == myBlocks[0]->column) {
-							return 1;
+						if (myBoard->board[x][y] == temp) {
+							idx = i;
+							break;
 						}
-						x += tempRook->dRow[i];
-						y += tempRook->dColumn[i];
+						x += Rook().dRow[i];
+						y += Rook().dColumn[i];
+					}
+					if (idx > -1) {
+						break;
+					}
+				}
+
+				if (idx > -1) {
+					int x = _xKing + Rook().dRow[idx];
+					int y = _yKing + Rook().dColumn[idx];
+					while (x and x < 9 and y and y < 9) {
+						if (tempBoard[x][y][1] == '*' || tempBoard[x][y][3] == '*')
+							return 1;
+						x += Rook().dRow[idx];
+						y += Rook().dColumn[idx];
+					}
+				}
+				return 0;
+			}
+			else if (temp->name == oBishop) {
+				int idx = -1;
+				for (int i = 0; i < 4; i++) {
+					int x = _xKing + Bishop().dRow[i];
+					int y = _yKing + Bishop().dColumn[i];
+					while (x and x < 9 and y and y < 9) {
+						if (myBoard->board[x][y] == temp) {
+							idx = i;
+							break;
+						}
+						x += Bishop().dRow[i];
+						y += Bishop().dColumn[i];
+					}
+					if (idx > -1) {
+						break;
+					}
+				}
+
+				if (idx > -1) {
+					int x = _xKing + Bishop().dRow[idx];
+					int y = _yKing + Bishop().dColumn[idx];
+					while (x and x < 9 and y and y < 9) {
+						if (tempBoard[x][y][1] == '*' || tempBoard[x][y][3] == '*')
+							return 1;
+						x += Bishop().dRow[idx];
+						y += Bishop().dColumn[idx];
+					}
+				}
+				return 0;
+			}
+			else if (temp->name == oQueen) {
+				int idx = -1;
+				for (int i = 0; i < 8; i++) {
+					int x = _xKing + Queen().dRow[i];
+					int y = _yKing + Queen().dColumn[i];
+					while (x and x < 9 and y and y < 9) {
+						if (myBoard->board[x][y] == temp) {
+							idx = i;
+							break;
+						}
+						x += Queen().dRow[i];
+						y += Queen().dColumn[i];
+					}
+					if (idx > -1) {
+						break;
+					}
+				}
+
+				if (idx > -1) {
+					int x = _xKing + Queen().dRow[idx];
+					int y = _yKing + Queen().dColumn[idx];
+					while (x and x < 9 and y and y < 9) {
+						if (tempBoard[x][y][1] == '*' || tempBoard[x][y][3] == '*')
+							return 1;
+						x += Queen().dRow[idx];
+						y += Queen().dColumn[idx];
 					}
 				}
 				return 0;
 			}
 		}
-		if (myKingChecks.size()) {
-			vector<vector<Piece>>myTempBoard;
-			for (int i = 0; i < 9; i++)
-			{
-				for (int j = 0; j < 9; j++) {
-					myTempBoard[i][j] = *(board->board[i][j]);
-				}
-			}
 
-			Rook* tempRook = new Rook;
-			int x = _xRook, y = _yRook;
-			for (int i = 0; i < 4; i++) {
-				x = _xRook + tempRook->dRow[i];
-				y = _yRook + tempRook->dColumn[i];
-				while (x and x < 9 and y and y < 9) {
-					if (board->board[x][y]->name[0] == opponentColor) {
-						myTempBoard[x][y].name[3] = '*';
-						break;
-					}
-					else if (board->board[x][y]->name == " . ") {
-						myTempBoard[x][y].name[1] = '*';
-					}
-					else {
-						break;
-					}
-					x += tempRook->dRow[i];
-					y += tempRook->dColumn[i];
-				}
-			}
-
-
-			int idxRow = myKingChecks[0].first, idxCol = myKingChecks[0].second;
-			x = _xRook;
-			y = _yRook;
-			int idxXKing = GetKing(board, piece).first;
-			int idxYKing = GetKing(board, piece).second;
-
-			if (board->board[idxRow][idxCol]->name == oRook) {
-				for (int i = 0; i < 4; i++) {
-					x = idxXKing + tempRook->dRow[i];
-					y = idxYKing + tempRook->dColumn[i];
-					while (x and x < 9 and y and y < 9) {
-						if (myTempBoard[x][y].name[0] != ' ') {
-							if (myTempBoard[x][y].name[3] == '*') {
-								return 1;
-							}
-						}
-						x += tempRook->dRow[i];
-						y += tempRook->dColumn[i];
-					}
-				}
-				return 0;
-			}
-
-			x = _xRook; y = _yRook;
-
-			if (board->board[idxRow][idxCol]->name == oBishop) {
-				Bishop* tempBishop = new Bishop;
-				for (int i = 0; i < 4; i++) {
-					x = idxXKing + tempBishop->dRow[i];
-					y = idxYKing + tempBishop->dColumn[i];
-					while (x and x < 9 and y and y < 9) {
-						if (myTempBoard[x][y].name[0] != ' ') {
-							if (myTempBoard[x][y].name[3] == '*') {
-								return 1;
-							}
-						}
-						x += tempBishop->dRow[i];
-						y += tempBishop->dColumn[i];
-					}
-				}
-				return 0;
-			}
-
-			x = _xRook; y = _yRook;
-
-			if (board->board[idxRow][idxCol]->name == oKnight) {
-				return 0;
-			}
-
-			x = _xRook; y = _yRook;
-
-			if (board->board[idxRow][idxCol]->name == oQueen) {
-				Queen* tempQueen = new Queen;
-				for (int i = 0; i < 8; i++) {
-					x = idxXKing + tempQueen->dRow[i];
-					y = idxYKing + tempQueen->dColumn[i];
-					while (x and x < 9 and y and y < 9) {
-						if (myTempBoard[x][y].name[0] != ' ') {
-							if (myTempBoard[x][y].name[3] == '*') {
-								return 1;
-							}
-						}
-						x += tempQueen->dRow[i];
-						y += tempQueen->dColumn[i];
-					}
-				}
-				return 0;
-			}
-
-			if (board->board[idxRow][idxCol]->name == oPawn) {
-				return 0;
-			}
-
+		if (!myChecks.size() and validPos) {
+			return 1;
+		}
+		else
+		{
+			return 0;
 		}
 	}
-	
+	Board AllValidMove(Board* board, Piece* piece)
+	{
+
+	}
+	Board MakeMove(int x, int y, Board* board, Piece* piece)
+	{
+
+	}
 };
 
