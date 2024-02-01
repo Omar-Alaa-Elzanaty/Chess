@@ -146,6 +146,7 @@
     <ClInclude Include="Queen.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Rook.h" />
+    <ClInclude Include="RookServices.h" />
     <ClInclude Include="System.h" />
   </ItemGroup>
   <ItemGroup>
