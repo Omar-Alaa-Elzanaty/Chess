@@ -32,35 +32,35 @@ public:
 	//virtual bool  CanMove(Board* board, Piece* piece) = 0;
 	//virtual Board AllValidMove(Board* board, Piece* piece) = 0;
 	//virtual Board MakeMove(int x, int y, Board* board, Piece* piece) = 0;
-	pair<int,int>kingpos;
-	pair<int,int>pos(Board* board, Piece* piece) {
+	pair<int, int>kingpos;
+	pair<int, int>pos(Board* board, Piece* piece) {
 		int xking, yking;
-		char col = piece->name[0];string Target;
+		char col = piece->name[0]; string Target;
 		Target.push_back(col); Target += "KI ";
 		for (int i = 1; i <= 8; i++) {// find king position
 			for (int j = 1; j <= 8; j++) {
 				if (board->board[i][j]->name == Target) {
 					xking = i;
 					yking = j;
-					return {xking,yking};
+					return { xking,yking };
 				}
 			}
-		}return {-1,-1};
+		}return { -1,-1 };
 	}
 	bool inboard(int idx1, int idx2) {
 		if (idx1 > 8 or idx1 < 1 or idx2>8 or idx2 < 1)return false;
 		return true;
 	}
-	vector<pair<int,int>>kish(Board* board,Piece* piece) {
-		kingpos = pos(board,piece);//+
+	vector<pair<int, int>>kish(Board* board, Piece* piece) {
+		kingpos = pos(board, piece);//+
 		string DiffrentColor = "0";
-		vector<pair<int,int>>kishplace;
+		vector<pair<int, int>>kishplace;
 		if (piece->Type == "Black")DiffrentColor = "W";
 		else if (piece->Type == "White")DiffrentColor = "B";
 		// my king and opponent rock or queen {
 		for (int i = kingpos.second; i <= 8; i++) {
 			if (board->board[kingpos.first][i]->name == (DiffrentColor + "RO ") or board->board[kingpos.first][i]->name == (DiffrentColor + "QU ")) {
-				kishplace.emplace_back(kingpos.first,i);
+				kishplace.emplace_back(kingpos.first, i);
 				return kishplace;
 			}
 			else if (board->board[kingpos.first][i]->name == " .  ")continue;
@@ -76,7 +76,7 @@ public:
 		}
 		for (int i = kingpos.first; i <= 8; i++) {
 			if (board->board[i][kingpos.second]->name == (DiffrentColor + "RO ") or board->board[i][kingpos.second]->name == (DiffrentColor + "QU ")) {
-				kishplace.emplace_back(i,kingpos.second);
+				kishplace.emplace_back(i, kingpos.second);
 				return kishplace;
 			}
 			else if (board->board[i][kingpos.second]->name == " .  ")continue;
@@ -84,7 +84,7 @@ public:
 		}
 		for (int i = kingpos.first; i >= 1; i--) {
 			if (board->board[i][kingpos.second]->name == (DiffrentColor + "RO ") or board->board[i][kingpos.second]->name == (DiffrentColor + "QU ")) {
-				kishplace.emplace_back(i,kingpos.second);
+				kishplace.emplace_back(i, kingpos.second);
 				return kishplace;
 			}
 			else if (board->board[i][kingpos.second]->name == " .  ")continue;
@@ -93,9 +93,9 @@ public:
 		// }
 		// 
 		// my king and opponent bishop or queen{
-		int idxx = kingpos.first;int idxy = kingpos.second;
+		int idxx = kingpos.first; int idxy = kingpos.second;
 		while (idxx < 9 and idxy < 9) {
-			idxx++;idxy++;
+			idxx++; idxy++;
 			if (idxx < 9 and idxy < 9) {
 				if (board->board[idxx][idxy]->name == (DiffrentColor + "BI ") or (board->board[idxx][idxy]->name == (DiffrentColor + "QU "))) {
 					kishplace.emplace_back(idxx, idxy);
@@ -156,9 +156,9 @@ public:
 		for (int i = 0; i < 8; i++) {
 			int newx = kingpos.first + Knight().dRow[i];
 			int newy = kingpos.second + Knight().dColumn[i];
-			if (inboard(newx,newy)) {
+			if (inboard(newx, newy)) {
 				if (board->board[newx][newy]->name == (DiffrentColor + "KN ")) {
-					kishplace.emplace_back(newx,newy);
+					kishplace.emplace_back(newx, newy);
 					return kishplace;
 				}
 			}
@@ -167,7 +167,7 @@ public:
 		//
 		// my king and opponent pawn {
 		idxx = kingpos.first - 1; idxy = kingpos.second - 1;
-		if (inboard(idxx,idxy)) {
+		if (inboard(idxx, idxy)) {
 			if (DiffrentColor == "B") {
 				if (board->board[idxx][idxy]->name == (DiffrentColor + "PA ")) {
 					kishplace.emplace_back(idxx, idxy);
@@ -211,7 +211,7 @@ public:
 			}
 		}
 		idxx = kingpos.first; idxy = kingpos.second - 1;
-		if (inboard(idxx,idxy)) {
+		if (inboard(idxx, idxy)) {
 			if (board->board[idxx][idxy]->name == (DiffrentColor + "PA ")) {
 				kishplace.emplace_back(idxx, idxy);
 				return kishplace;
@@ -231,7 +231,7 @@ public:
 			}
 		}
 		Board show = *board;
-		vector<pair<int,int>>kishplace = kish(board,piece);
+		vector<pair<int, int>>kishplace = kish(board, piece);
 		if (kishplace.size() == 0) {
 			for (int i = 0; i < 8; i++) {
 				idxx = piece->row + Knight().dRow[i], idxy = piece->column + Knight().dColumn[i];
@@ -378,14 +378,14 @@ public:
 			// if you cant so you cant move
 		}cout << "valid place are (*)" << endl;
 		return show;
-	}vector<pair<int,int>>knightplace;
-	bool CanMove(Board* board, Piece* piece){
+	}vector<pair<int, int>>knightplace;
+	bool CanMove(Board* board, Piece* piece) {
 		Knight* kn = new Knight;
 		int idxx = piece->row; int idxy = piece->column;
 		for (int i = 0; i < 8; i++) {
 			idxx = piece->row + kn->dRow[i]; idxy = piece->column + kn->dColumn[i];
 			if (inboard(idxx, idxy)) {
-				knightplace.emplace_back(idxx,idxy);
+				knightplace.emplace_back(idxx, idxy);
 			}
 		}
 		for (int i = 0; i < 8; i++) {
@@ -424,7 +424,7 @@ public:
 				piece->column = prevCol;
 				temp.board[prevRow][prevCol] = piece;
 				board->board[x][y] = temp.board[x][y];
-				board->board[prevRow][prevCol] = temp.board[prevRow][prevCol];
+				board->board[prevRow][prevCol] = temp.board[prevRow][prevCol];				
 				cout << "your knight have moved" << endl;
 				return temp;
 			}
@@ -437,4 +437,3 @@ public:
 		}
 	}
 };
-

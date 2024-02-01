@@ -27,6 +27,7 @@
 #include"KnightService.h"
 #include"Knight.h"
 #include"IKnightService.h"
+#include "RookServices.h"
 using namespace std;
 int main()
 {
