@@ -27,8 +27,15 @@
 #include"KnightService.h"
 #include"Knight.h"
 #include"IKnightService.h"
+#include "RookServices.h"
 using namespace std;
 int main()
 {
-	
+    Board* b = new Board;
+    BoardServices bs;
+    Board mb = KnightService().AllValidMove( b, b->board[1][2]);
+    bs.DisplayBoard(&mb);
+    cout << "\n";
+   
+    
 }

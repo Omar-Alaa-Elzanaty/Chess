@@ -92,7 +92,10 @@ private:
 			y--;
 			if (x and x < 9 and y and y < 9 and myBoard->board[x][y]->name == "BPA ")
 				CheckPos.push_back({ x,y });
-			y += 2;
+			y++;
+			if (x and x < 9 and y and y < 9 and myBoard->board[x][y]->name == "BPA ")
+				CheckPos.push_back({ x,y });
+			y ++;
 			if (x and x < 9 and y and y < 9 and myBoard->board[x][y]->name == "BPA ")
 				CheckPos.push_back({ x,y });
 		}
@@ -102,7 +105,10 @@ private:
 			y = _yKing + 1;
 			if (x and x < 9 and y and y < 9 and myBoard->board[x][y]->name == "WPA ")
 				CheckPos.push_back({ x,y });
-			y -= 2;
+			y--;
+			if (x and x < 9 and y and y < 9 and myBoard->board[x][y]->name == "WPA ")
+				CheckPos.push_back({ x,y });
+			y--;
 			if (x and x < 9 and y and y < 9 and myBoard->board[x][y]->name == "WPA ")
 				CheckPos.push_back({ x,y });
 		}
@@ -567,16 +573,18 @@ private:
 	Board MakeMove(int x, int y, Board* myBoard, Piece* myPiece)
 	{
 		Board newBoard = *myBoard;
-		newBoard.board[x][y] = new Rook;
-		newBoard.board[x][y]->name = myPiece->name;
-		newBoard.board[x][y]->Type = myPiece->Type;
+		int prevRow = myPiece->row;
+		int prevCol = myPiece->column;
+		newBoard.board[x][y] = myPiece;
 		newBoard.board[x][y]->row = x;
-		newBoard.board[x][y]->row = y;
-
-		newBoard.board[myPiece->row][myPiece->column] = new Piece;
-		newBoard.board[myPiece->row][myPiece->column]->row = myPiece->row;
-		newBoard.board[myPiece->row][myPiece->column]->column = myPiece->column;
-
+		newBoard.board[x][y]->column = y;
+		//delete piece;
+		myPiece = new Piece;
+		myPiece->row = prevRow;
+		myPiece->column = prevCol;
+		newBoard.board[prevRow][prevCol] = myPiece;
+		myBoard->board[x][y] = newBoard.board[x][y];
+		myBoard->board[prevRow][prevCol] = newBoard.board[prevRow][prevCol];
 		return newBoard;
 	}
 };
