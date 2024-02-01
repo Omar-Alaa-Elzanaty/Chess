@@ -224,7 +224,7 @@ public:
 		Knight* kn = new Knight;
 		int idxx = piece->row;int idxy = piece->column;
 		set<pair<int,int>>se;
-		for (int i = 1; i <= 8; i++) {
+		for (int i = 0; i < 8; i++) {
 			idxx = piece->row + kn->dRow[i]; idxy = piece->column + kn->dColumn[i];
 			if (inboard(idxx,idxy)) {
 				se.emplace(idxx,idxy);
@@ -235,7 +235,7 @@ public:
 		if (kishplace.size() == 0) {
 			for (int i = 0; i < 8; i++) {
 				idxx = piece->row + Knight().dRow[i], idxy = piece->column + Knight().dColumn[i];
-				if (inboard(idxx,idxy)) {
+				if (inboard(idxx,idxy) and board->board[idxx][idxy]->name[0] != piece->Type[0]) {
 					canplace.emplace_back(idxx,idxy);
 					show.board[idxx][idxy]->name = " *  ";
 				}
@@ -382,7 +382,7 @@ public:
 	bool CanMove(Board* board, Piece* piece){
 		Knight* kn = new Knight;
 		int idxx = piece->row; int idxy = piece->column;
-		for (int i = 1; i <= 8; i++) {
+		for (int i = 0; i < 8; i++) {
 			idxx = piece->row + kn->dRow[i]; idxy = piece->column + kn->dColumn[i];
 			if (inboard(idxx, idxy)) {
 				knightplace.emplace_back(idxx,idxy);
@@ -397,7 +397,7 @@ public:
 		}return false;
 	}
 	Board MakeMove(int x, int y,Board* board, Piece* piece){
-		Board temp= *board;
+		Board temp = *board;
 		if (CanMove(board,piece)){
 			bool put = 0;
 			bool put2 = 0;
@@ -414,16 +414,19 @@ public:
 				}
 			}
 			if (put and put2) {
-				int pre_x = piece->row;
-				int pre_y = piece->column;
+				int prevRow = piece->row;
+				int prevCol = piece->column;
 				temp.board[x][y] = piece;
 				temp.board[x][y]->row = x;
 				temp.board[x][y]->column = y;
-				delete piece;
 				piece = new Piece;
-				piece->row = pre_x;
-				piece->column = pre_y;
+				piece->row = prevRow;
+				piece->column = prevCol;
+				temp.board[prevRow][prevCol] = piece;
+				board->board[x][y] = temp.board[x][y];
+				board->board[prevRow][prevCol] = temp.board[prevRow][prevCol];
 				cout << "your knight have moved" << endl;
+				return temp;
 			}
 			else {
 				cout << "your knight cant move" << endl;
@@ -432,7 +435,6 @@ public:
 		else {
 			cout << "your knight cant move" << endl;
 		}
-		return temp;
 	}
 };
 
