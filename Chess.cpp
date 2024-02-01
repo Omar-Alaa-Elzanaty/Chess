@@ -31,11 +31,14 @@
 using namespace std;
 int main()
 {
-    Board* b = new Board;
-    BoardServices bs;
-    Board mb = KnightService().AllValidMove( b, b->board[1][2]);
-    bs.DisplayBoard(&mb);
-    cout << "\n";
-   
-    
+	Board* b = new Board;
+	Piece* p = new Piece;
+	p = b->board[8][2];
+	KnightService x;
+	Board xx = x.AllValidMove(b,p);
+	BoardServices().DisplayBoard(&xx);
+	cout << endl;
+	cout << x.CanMove(b,p) << endl;
+	Board xu = x.MakeMove(6,6,b,p);
+	BoardServices().DisplayBoard(&xu);
 }
