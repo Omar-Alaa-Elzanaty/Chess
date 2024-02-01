@@ -91,11 +91,8 @@ private:
 			x--;
 			y--;
 			if (x and x < 9 and y and y < 9 and myBoard->board[x][y]->name == "BPA ")
-				CheckPos.push_back({ x,y });
-			y++;
-			if (x and x < 9 and y and y < 9 and myBoard->board[x][y]->name == "BPA ")
-				CheckPos.push_back({ x,y });
-			y ++;
+				CheckPos.push_back({ x,y });		
+			y +=2;
 			if (x and x < 9 and y and y < 9 and myBoard->board[x][y]->name == "BPA ")
 				CheckPos.push_back({ x,y });
 		}
@@ -104,11 +101,8 @@ private:
 			x = _xKing + 1;
 			y = _yKing + 1;
 			if (x and x < 9 and y and y < 9 and myBoard->board[x][y]->name == "WPA ")
-				CheckPos.push_back({ x,y });
-			y--;
-			if (x and x < 9 and y and y < 9 and myBoard->board[x][y]->name == "WPA ")
-				CheckPos.push_back({ x,y });
-			y--;
+				CheckPos.push_back({ x,y });		
+			y-=2;
 			if (x and x < 9 and y and y < 9 and myBoard->board[x][y]->name == "WPA ")
 				CheckPos.push_back({ x,y });
 		}
