@@ -24,6 +24,7 @@
 #include <bitset>
 #include "System.h"
 #include"BoardServices.h"
+#include"BishopService.h"
 #include"KnightService.h"
 #include"Knight.h"
 #include"IKnightService.h"
@@ -31,14 +32,14 @@
 using namespace std;
 int main()
 {
-	Board* b = new Board;
-	Piece* p = new Piece;
-	p = b->board[8][2];
-	KnightService x;
-	Board xx = x.AllValidMove(b,p);
-	BoardServices().DisplayBoard(&xx);
-	cout << endl;
-	cout << x.CanMove(b,p) << endl;
-	Board xu = x.MakeMove(6,6,b,p);
-	BoardServices().DisplayBoard(&xu);
+	Board board;
+	BoardServices BS;
+	BS.DisplayBoard(&board); cout << '\n';
+	KnightService BIS;
+	Piece* BIP = board.board[8][2];
+	Board Allv = BIS.AllValidMove(&board, BIP);
+	BS.DisplayBoard(&Allv); cout << '\n';
+	BIS.MakeMove(6, 3, &board, BIP);
+	//BS.DisplayBoard(&Allv); cout << '\n';
+
 }
