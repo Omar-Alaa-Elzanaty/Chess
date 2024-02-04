@@ -34,7 +34,8 @@ public:
 	Piece() {
 		name = " .  ";
 	}
-	Piece* operator=(const Piece*& cur) {
+
+	/*Piece* operator=(const Piece*& cur) {
 		Piece *ret = new Piece;
 		ret->name = cur->name;
 		ret->Type = cur->Type;
@@ -42,6 +43,26 @@ public:
 		ret->column = cur->column;
 		ret->dRow = cur->dRow;
 		ret->dColumn = cur->dColumn;
+		return ret;
+	}*/
+	Piece* Clone(Piece* p) {
+		Piece* ret = new Piece;
+		ret->name = p->name;
+		ret->Type = p->Type;
+		ret->row = p->row;
+		ret->column = p->column;
+		//ret->dRow = p->dRow;
+		//ret->dColumn= p->dColumn;
+		//ret->dRow = p->dRow;
+		ret->dRow = new int[sizeof(p->dRow) / p->dRow[0]];
+		for (int i = 0; i < sizeof(p->dRow) / p->dRow[0]; i++) {
+			ret->dRow[i] = p->dRow[i];
+		}
+		//ret->dColumn = p->dColumn;
+		ret->dRow = new int[sizeof(p->dColumn) / p->dColumn[0]];
+		for (int i = 0; i < sizeof(p->dColumn) / p->dColumn[0]; i++) {
+			ret->dColumn[i] = p->dColumn[i];
+		}
 		return ret;
 	}
 };
