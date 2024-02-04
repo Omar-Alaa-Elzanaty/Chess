@@ -36,7 +36,7 @@ public:
 	pair<int, int>pos(Board* board, Piece* piece) {
 		int xking, yking;
 		char col = piece->name[0]; string Target;
-		Target.push_back(col); Target += "KI ";
+		Target.push_back(col); Target += "KI "; 
 		for (int i = 1; i <= 8; i++) {// find king position
 			for (int j = 1; j <= 8; j++) {
 				if (board->board[i][j]->name == Target) {
