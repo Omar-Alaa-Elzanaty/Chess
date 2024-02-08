@@ -28,18 +28,10 @@
 #include"KnightService.h"
 #include"Knight.h"
 #include"IKnightService.h"
+#include "PawnServices.h"
 #include "RookServices.h"
 using namespace std;
 int main()
 {
-	Board board;
-	BoardServices BS;
-	BS.DisplayBoard(&board); cout << '\n';
-	KnightService BIS;
-	Piece* BIP = board.board[8][2];
-	Board Allv = BIS.AllValidMove(&board, BIP);
-	BS.DisplayBoard(&Allv); cout << '\n';
-	BIS.MakeMove(6, 3, &board, BIP);
-	//BS.DisplayBoard(&Allv); cout << '\n';
 
 }
