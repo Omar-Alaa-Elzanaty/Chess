@@ -2,7 +2,7 @@
 #include "IPieceService.h"
 class PawnServices : public IPieceService
 {
-public:
+private:
 	pair<int, int> GetKing(Board* myBoard, Piece* myPiece)
 	{
 		char color = myPiece->name[0];
@@ -210,6 +210,7 @@ public:
 		}
 		return tempBoard;
 	}
+public:
 	bool CanMove(Board* myBoard, Piece* myPiece)
 	{
 		vector<pair<int, int>>myChecks = Check(myBoard, myPiece);
