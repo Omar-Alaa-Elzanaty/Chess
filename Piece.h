@@ -35,11 +35,7 @@ public:
 		name = " .  ";
 	}
 
-<<<<<<< HEAD
-	Piece* operator=(const Piece*& cur) {
-=======
 	/*Piece* operator=(const Piece*& cur) {
->>>>>>> e4be1512806cce3c57b6e58de26464d13914ac62
 		Piece *ret = new Piece;
 		ret->name = cur->name;
 		ret->Type = cur->Type;
@@ -47,8 +43,6 @@ public:
 		ret->column = cur->column;
 		ret->dRow = cur->dRow;
 		ret->dColumn = cur->dColumn;
-<<<<<<< HEAD
-=======
 		return ret;
 	}*/
 	Piece* Clone(Piece* p) {
@@ -69,7 +63,6 @@ public:
 		for (int i = 0; i < sizeof(p->dColumn) / p->dColumn[0]; i++) {
 			ret->dColumn[i] = p->dColumn[i];
 		}
->>>>>>> e4be1512806cce3c57b6e58de26464d13914ac62
 		return ret;
 	}
 };

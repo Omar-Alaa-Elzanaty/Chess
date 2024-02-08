@@ -11,11 +11,7 @@ class BishopService :public IPieceService
         int _xking, _yking;
         char col = piece->name[0];
         string Target;
-<<<<<<< HEAD
-        Target.push_back(col);Target+= "KI ";
-=======
         Target.push_back(col); Target += "KI ";
->>>>>>> e4be1512806cce3c57b6e58de26464d13914ac62
         for (int i = 1; i <= 8; i++) {// find king position
             for (int j = 1; j <= 8; j++) {
                 if (board->board[i][j]->name == Target) {
@@ -36,13 +32,8 @@ class BishopService :public IPieceService
 
         // rook , queen 
         for (int i = 0; i < 4; i++) {
-<<<<<<< HEAD
-            int x = king_pos.first +Rook().dRow[i];
-            int y = king_pos.second +Rook().dColumn[i];
-=======
             int x = king_pos.first + Rook().dRow[i];
             int y = king_pos.second + Rook().dColumn[i];
->>>>>>> e4be1512806cce3c57b6e58de26464d13914ac62
             string Target1, Target2;
             Target1.push_back(ops); Target1 += "QU ";
             Target2.push_back(ops); Target2 += "RO ";
@@ -50,11 +41,7 @@ class BishopService :public IPieceService
                 string tmp = board->board[x][y]->name;
                 if (tmp[0] != ' ') { // not empty cell
                     if (tmp[0] == ops) {
-<<<<<<< HEAD
-                        if (tmp == Target1|| tmp == Target2) {
-=======
                         if (tmp == Target1 || tmp == Target2) {
->>>>>>> e4be1512806cce3c57b6e58de26464d13914ac62
                             ret.push_back(*board->board[x][y]);
                         }
                     }
@@ -212,15 +199,9 @@ class BishopService :public IPieceService
         }
     }
 public:
-<<<<<<< HEAD
-	//virtual bool  CanMove(Board* board, Piece* piece) = 0;
-	//virtual Board AllValidMove(Board* board, Piece* piece) = 0;
-	//virtual Board MakeMove(int x, int y, Board* board, Piece* piece) = 0;
-=======
     //virtual bool  CanMove(Board* board, Piece* piece) = 0;
     //virtual Board AllValidMove(Board* board, Piece* piece) = 0;
     //virtual Board MakeMove(int x, int y, Board* board, Piece* piece) = 0;
->>>>>>> e4be1512806cce3c57b6e58de26464d13914ac62
 
 
     bool  CanMove(Board* board, Piece* piece) {
@@ -238,15 +219,9 @@ public:
             if (ch.name == Mrg) {
                 return false;
             }
-<<<<<<< HEAD
-            Mrg=""; Mrg.push_back(ops); Mrg += "BI ";
-            if (ch.name == Mrg) {
-                int i = 0,ok=0;
-=======
             Mrg = ""; Mrg.push_back(ops); Mrg += "BI ";
             if (ch.name == Mrg) {
                 int i = 0, ok = 0;
->>>>>>> e4be1512806cce3c57b6e58de26464d13914ac62
                 for (; i < 4; i++) {
                     int x = king_pos.first + Bishop().dRow[i];
                     int y = king_pos.second + Bishop().dColumn[i];
@@ -267,11 +242,7 @@ public:
                 }
                 return false;
             }
-<<<<<<< HEAD
-            Mrg=""; Mrg.push_back(ops); Mrg += "KN ";
-=======
             Mrg = ""; Mrg.push_back(ops); Mrg += "KN ";
->>>>>>> e4be1512806cce3c57b6e58de26464d13914ac62
             if (ch.name == Mrg) {
                 int i = 0, ok = 0;
                 for (; i < 8; i++) {
@@ -283,11 +254,7 @@ public:
                 }
                 return false;
             }
-<<<<<<< HEAD
-            Mrg=""; Mrg.push_back(ops); Mrg += "QU ";
-=======
             Mrg = ""; Mrg.push_back(ops); Mrg += "QU ";
->>>>>>> e4be1512806cce3c57b6e58de26464d13914ac62
             if (ch.name == Mrg) {
                 int i = 0, ok = 0;
                 for (; i < 8; i++) {
@@ -310,11 +277,7 @@ public:
                 }
                 return false;
             }
-<<<<<<< HEAD
-            Mrg=""; Mrg.push_back(ops); Mrg += "RO ";
-=======
             Mrg = ""; Mrg.push_back(ops); Mrg += "RO ";
->>>>>>> e4be1512806cce3c57b6e58de26464d13914ac62
             if (ch.name == Mrg) {
                 int i = 0, ok = 0;
                 for (; i < 4; i++) {
@@ -362,11 +325,7 @@ public:
             string Target2; Target2 += ('W' + 'B' - piece->name[0]);
 
             Target2 += "KN ";
-<<<<<<< HEAD
-            if (ch.name == Target||ch.name==Target2) {
-=======
             if (ch.name == Target || ch.name == Target2) {
->>>>>>> e4be1512806cce3c57b6e58de26464d13914ac62
                 for (int i = 1; i <= 8; i++)for (int j = 1; j <= 8; j++) {
                     if (ret.board[i][j] == &ch) {/////////////error
                         ret.board[i][j]->name[3] = '*';
@@ -380,17 +339,10 @@ public:
             Target2 = ('W' + 'B' - piece->name[0]);
             Target2 += "QU ";
             if (ch.name == Target || ch.name == Target2) {
-<<<<<<< HEAD
-                int i = 0,ok=0;
-                for (; i < 4; i++) {
-                    int x = king_pos.first+Bishop().dRow[i];
-                    int y = king_pos.second+Bishop().dColumn[i];
-=======
                 int i = 0, ok = 0;
                 for (; i < 4; i++) {
                     int x = king_pos.first + Bishop().dRow[i];
                     int y = king_pos.second + Bishop().dColumn[i];
->>>>>>> e4be1512806cce3c57b6e58de26464d13914ac62
                     while (x and x <= 8 and y and y <= 8) {
                         if (&ch == board->board[x][y]) {///////////////error
                             ok = 1; break;
@@ -403,11 +355,7 @@ public:
                 int x = king_pos.first + Bishop().dRow[i];
                 int y = king_pos.second + Bishop().dColumn[i];
                 while (x and x <= 8 and y and y <= 8) {
-<<<<<<< HEAD
-                    if (GeneralBoard.board[x][y]->name[0]!=' ') {
-=======
                     if (GeneralBoard.board[x][y]->name[0] != ' ') {
->>>>>>> e4be1512806cce3c57b6e58de26464d13914ac62
                         if (GeneralBoard.board[x][y]->name[3] == '*')
                             ret.board[x][y]->name[3] = '*';
                     }
@@ -490,15 +438,6 @@ public:
         }
     }
     Board MakeMove(int x, int y, Board* board, Piece* piece) {
-<<<<<<< HEAD
-        board->board[x][y]->name = board->board[piece->row][piece->column]->name;
-        board->board[x][y]->Type = board->board[piece->row][piece->column]->Type;
-        board->board[x][y]->dRow = board->board[piece->row][piece->column]->dRow;
-        board->board[x][y]->dColumn = board->board[piece->row][piece->column]->dColumn;
-
-        board->board[piece->row][piece->column]->name = " .  ";
-        board->board[piece->row][piece->column]->Type = "";
-=======
         int xp = piece->row;
         int yp = piece->column;
         board->board[x][y] = Piece().Clone(piece);
@@ -507,7 +446,6 @@ public:
         board->board[xp][yp] = new Piece();
         board->board[xp][yp]->row = xp;
         board->board[xp][yp]->column = yp;
->>>>>>> e4be1512806cce3c57b6e58de26464d13914ac62
         return *board;
     }
 };

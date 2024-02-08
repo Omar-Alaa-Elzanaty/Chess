@@ -111,13 +111,6 @@ public:
 			board[7][i]->row = 7;
 			board[7][i]->column = i;
 		}
-<<<<<<< HEAD
-		for (int i = 1; i <= 8; i++)for (int j = 1; j <= 8; j++) {
-			if (board[i][j] == nullptr) {
-				board[i][j] = new Piece;
-			}
-		}
-=======
 		for (int i = 1; i <= 8; i++) {
 			for (int j = 1; j <= 8; j++) {
 				if (board[i][j] == nullptr){
@@ -126,20 +119,13 @@ public:
 			}
 		}
 			
->>>>>>> e4be1512806cce3c57b6e58de26464d13914ac62
 	}
 
 	Board operator=(Board* newBoard) {
 		Board ret;
-<<<<<<< HEAD
-		for (int i = 0; i < 9; i++) {
-			for (int j = 0; j < 9; j++) {
-				ret.board[i][j] = newBoard->board[i][j];
-=======
 		for (int i = 1; i < 9; i++) {
 			for (int j = 1; j < 9; j++) {
 				ret.board[i][j] = Piece().Clone(newBoard->board[i][j]);
->>>>>>> e4be1512806cce3c57b6e58de26464d13914ac62
 			}
 		}
 		return ret;
