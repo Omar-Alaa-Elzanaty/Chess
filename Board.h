@@ -1,5 +1,28 @@
 #pragma once
+#include <algorithm>
+#include <array>
+#include <bitset>
+#include <cassert>
+#include <chrono>
+#include <climits>
+#include <cmath>
+#include <complex>
+#include <cstring>
+#include <functional>
+#include <iomanip>
+#include <iostream>
+#include <map>
+#include <numeric>
+#include <queue>
+#include <random>
+#include <set>
 #include <vector>
+#include <stack>
+#include <unordered_set>
+#include <unordered_map>
+#include <algorithm>
+#include <fstream>
+#include <bitset>
 #include "Piece.h"
 #include "Rook.h"
 #include "Knight.h"
@@ -7,6 +30,7 @@
 #include "Queen.h"
 #include "King.h"
 #include "Pawn.h"
+using namespace std;
 class Board
 {
 private:
@@ -87,18 +111,44 @@ public:
 			board[7][i]->row = 7;
 			board[7][i]->column = i;
 		}
+<<<<<<< HEAD
 		for (int i = 1; i <= 8; i++)for (int j = 1; j <= 8; j++) {
 			if (board[i][j] == nullptr) {
 				board[i][j] = new Piece;
 			}
 		}
+=======
+		for (int i = 1; i <= 8; i++) {
+			for (int j = 1; j <= 8; j++) {
+				if (board[i][j] == nullptr){
+					board[i][j] = new Piece;
+				}
+			}
+		}
+			
+>>>>>>> e4be1512806cce3c57b6e58de26464d13914ac62
 	}
 
 	Board operator=(Board* newBoard) {
 		Board ret;
+<<<<<<< HEAD
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
 				ret.board[i][j] = newBoard->board[i][j];
+=======
+		for (int i = 1; i < 9; i++) {
+			for (int j = 1; j < 9; j++) {
+				ret.board[i][j] = Piece().Clone(newBoard->board[i][j]);
+>>>>>>> e4be1512806cce3c57b6e58de26464d13914ac62
+			}
+		}
+		return ret;
+	}
+	Board operator=(Board newBoard) {
+		Board ret;
+		for (int i = 0; i < 9; i++) {
+			for (int j = 0; j < 9; j++) {
+				ret.board[i][j] = newBoard.board[i][j]->Clone(newBoard.board[i][j]);
 			}
 		}
 		return ret;
