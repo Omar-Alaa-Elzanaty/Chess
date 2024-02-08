@@ -111,11 +111,14 @@ public:
 			board[7][i]->row = 7;
 			board[7][i]->column = i;
 		}
-		for (int i = 1; i <= 8; i++)for (int j = 1; j <= 8; j++) {
-			if (board[i][j] == nullptr) {
-				board[i][j] = new Piece;
+		for (int i = 1; i <= 8; i++) {
+			for (int j = 1; j <= 8; j++) {
+				if (board[i][j] == nullptr){
+					board[i][j] = new Piece;
+				}
 			}
 		}
+			
 	}
 
 	Board operator=(Board* newBoard) {
