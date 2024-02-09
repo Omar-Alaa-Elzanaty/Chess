@@ -4,8 +4,8 @@ class King :public Piece{
 public:
 
     King() {
-        this->dRow = new int[9];
-        this->dColumn = new int[9];
+        this->dRow.resize(9);
+        this->dColumn.resize(9);
         dRow[0] = 0; dColumn[0] = 1;
         dRow[1] = 0; dColumn[1] = -1;
         dRow[2] = 1; dColumn[2] = 0;

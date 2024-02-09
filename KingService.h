@@ -116,16 +116,17 @@ public:
     Board MakeMove(int x, int y, Board* board, Piece* piece) {///////////////error
 
 
-        board->board[x][y] = piece;
-
-        int pre_x = board->board[x][y]->row;
-        int pre_y = board->board[x][y]->column;
+        int xp = piece->row;
+        int yp = piece->column;
+        board->board[x][y]->Clone(piece);
         board->board[x][y]->row = x;
         board->board[x][y]->column = y;
-        delete piece;
-        piece = new Piece;
-        piece->row = pre_x;
-        piece->column = pre_y;
+        Piece* rem = board->board[xp][yp];
+        board->board[xp][yp] = new Piece();
+        board->board[xp][yp]->row = xp;
+        board->board[xp][yp]->column = yp;
+        delete rem;
+        return *board;
     }
 
 };
