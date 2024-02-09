@@ -27,8 +27,8 @@ class BishopService :public IPieceService
     vector<Piece>KingCheck(Board* board, Piece* piece) {
         king_pos = KingPos(board, piece);
         vector<Piece>ret;
-        char ops = piece->name[0];
-        ops = (ops == 'W' ? 'B' : 'W');
+        char ops = 'W' + 'B' - piece->name[0];
+        //ops = (ops == 'W' ? 'B' : 'W');
 
         // rook , queen 
         for (int i = 0; i < 4; i++) {
@@ -58,7 +58,7 @@ class BishopService :public IPieceService
             int y = king_pos.second + Bishop().dColumn[i];
             string Target1, Target2;
             Target1.push_back(ops); Target1 += "QU ";
-            Target2.push_back(ops); Target2 += "RO ";
+            Target2.push_back(ops); Target2 += "BI ";
             while (x <= 8 and x and y <= 8 and y) {
                 string tmp = board->board[x][y]->name;
                 if (tmp[0] != ' ') { // not empty cell
@@ -183,7 +183,7 @@ class BishopService :public IPieceService
         GeneralBoard = board;
        /* cout << "\n\nInSide\n\n\n";
         BoardServices().DisplayBoard(&GeneralBoard); cout << "\n\n\n";*/
-        cout << piece->dRow.size() << '\n';
+        //cout << piece->dRow.size() << '\n';
         //cout << "\nDone make copy \n";
         for (int i = 0; i < 4; i++) {
             int x = piece->row +piece->dRow[i];
@@ -232,7 +232,8 @@ public:
                     int x = king_pos.first + Bishop().dRow[i];
                     int y = king_pos.second + Bishop().dColumn[i];
                     while (x and y and x <= 8 and y <= 8) {
-                        if (board->board[x][y] == &ch) {/////////////////////////////////////error
+                        //if (board->board[x][y] == &ch) {/////////////////////////////////////error
+                        if (x == ch.row and y==ch.column) {
                             ok = 1; break;
                         }
                         x += Bishop().dRow[i];
@@ -254,7 +255,8 @@ public:
                 for (; i < 8; i++) {
                     int x = king_pos.first + Knight().dRow[i];
                     int y = king_pos.second + Knight().dColumn[i];
-                    if (board->board[x][y] == &ch) {////////////////////////////////////////error
+                    //if (board->board[x][y] == &ch) {////////////////////////////////////////error
+                    if (x == ch.row and y == ch.column) {
                         if (GeneralBoard.board[x][y]->name[3] == '*')return true;
                     }
                 }
@@ -267,7 +269,8 @@ public:
                     int x = king_pos.first + Queen().dRow[i];
                     int y = king_pos.second + Queen().dColumn[i];
                     while (x and y and x <= 8 and y <= 8) {
-                        if (board->board[x][y] == &ch) {/////////////////////////////////////error
+                        //if (board->board[x][y] == &ch) {/////////////////////////////////////error
+                        if (x == ch.row and y == ch.column) {
                             ok = 1; break;
                         }
                         x += Queen().dRow[i];
@@ -290,7 +293,8 @@ public:
                     int x = king_pos.first + Rook().dRow[i];
                     int y = king_pos.second + Rook().dColumn[i];
                     while (x and y and x <= 8 and y <= 8) {
-                        if (board->board[x][y] == &ch) {/////////////////////////////////////error
+                        //if (board->board[x][y] == &ch) {/////////////////////////////////////error
+                        if (x == ch.row and y == ch.column) {
                             ok = 1; break;
                         }
                         x += Rook().dRow[i];
@@ -319,12 +323,19 @@ public:
         else return true;
     }
     Board AllValidMove(Board* board, Piece* piece) {
-        CanMove(board, piece);
+        if (!CanMove(board, piece))return *board;
         //cout << "\nDone CanMove\n";
+        /*cout << 
+            "KKKKKKKKKKKKKKKKKKKing Cheeeeeeeeeeeeeeeeeck!!!! " 
+            << king_check.size() << "\n\n";
+        cout << king_pos.first << ' ' << king_pos.second << '\n';*/
+
+
         if (king_block.size() == 0 and king_check.size() == 0)
             return GeneralBoard;
-        Board ret = *board;
 
+        Board ret = *board;
+        
         if (king_check.size()) {
             Piece ch = king_check[0];
             string Target; Target.push_back('W' + 'B' - piece->name[0]);
@@ -334,7 +345,8 @@ public:
             Target2 += "KN ";
             if (ch.name == Target || ch.name == Target2) {
                 for (int i = 1; i <= 8; i++)for (int j = 1; j <= 8; j++) {
-                    if (ret.board[i][j] == &ch) {/////////////error
+                    //if (ret.board[i][j] == &ch) {/////////////error
+                        if (i == ch.row and j == ch.column) {
                         ret.board[i][j]->name[3] = '*';
                         return ret;
                     }
@@ -351,7 +363,8 @@ public:
                     int x = king_pos.first + Bishop().dRow[i];
                     int y = king_pos.second + Bishop().dColumn[i];
                     while (x and x <= 8 and y and y <= 8) {
-                        if (&ch == board->board[x][y]) {///////////////error
+                        //if (&ch == board->board[x][y]) {///////////////error
+                        if (x == ch.row and y == ch.column) {
                             ok = 1; break;
                         }
                         x += Bishop().dRow[i];
@@ -387,7 +400,8 @@ public:
                     int x = king_pos.first + Rook().dRow[i];
                     int y = king_pos.second + Rook().dColumn[i];
                     while (x and x <= 8 and y and y <= 8) {
-                        if (&ch == board->board[x][y]) {///////////////////////////error
+                        //if (&ch == board->board[x][y]) {///////////////////////////error
+                        if (x == ch.row and y == ch.column) {
                             ok = 1; break;
                         }
                         x += Rook().dRow[i];
@@ -420,7 +434,8 @@ public:
                 int x = king_pos.first + Bishop().dRow[i];
                 int y = king_pos.second + Bishop().dColumn[i];
                 while (x and x <= 8 and y and y <= 8) {
-                    if (&bl == board->board[x][y]) {////////////////////error
+                    //if (&bl == board->board[x][y]) {////////////////////error
+                    if (x == bl.row and y == bl.column) {
                         ok = 1; break;
                     }
                     x += Bishop().dRow[i];
@@ -443,6 +458,8 @@ public:
             }
             return ret;
         }
+
+        return ret;
     }
     Board MakeMove(int x, int y, Board* board, Piece* piece) {
         int xp = piece->row;
