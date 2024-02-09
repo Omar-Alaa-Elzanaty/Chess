@@ -132,8 +132,8 @@ public:
 	}
 	Board operator=(Board newBoard) {
 		Board ret;
-		for (int i = 0; i < 9; i++) {
-			for (int j = 0; j < 9; j++) {
+		for (int i = 1; i < 9; i++) {
+			for (int j = 1; j < 9; j++) {
 				ret.board[i][j] = newBoard.board[i][j]->Clone(newBoard.board[i][j]);
 			}
 		}

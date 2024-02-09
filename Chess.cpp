@@ -33,5 +33,9 @@
 using namespace std;
 int main()
 {
+	Board brd;
+	BoardServices brds;
+	brds.DisplayBoard(&brd); cout << '\n';
+
 
 }

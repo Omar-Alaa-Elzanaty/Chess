@@ -30,7 +30,7 @@ public:
 	string name;
 	string Type;
 	int row, column;
-	int* dRow, * dColumn;
+	vector<int> dRow, dColumn;
 	Piece() {
 		name = " .  ";
 	}
@@ -51,18 +51,8 @@ public:
 		ret->Type = p->Type;
 		ret->row = p->row;
 		ret->column = p->column;
-		//ret->dRow = p->dRow;
-		//ret->dColumn= p->dColumn;
-		//ret->dRow = p->dRow;
-		ret->dRow = new int[sizeof(p->dRow) / p->dRow[0]];
-		for (int i = 0; i < sizeof(p->dRow) / p->dRow[0]; i++) {
-			ret->dRow[i] = p->dRow[i];
-		}
-		//ret->dColumn = p->dColumn;
-		ret->dRow = new int[sizeof(p->dColumn) / p->dColumn[0]];
-		for (int i = 0; i < sizeof(p->dColumn) / p->dColumn[0]; i++) {
-			ret->dColumn[i] = p->dColumn[i];
-		}
+		ret->dRow = p->dRow;
+		ret->dColumn= p->dColumn;
 		return ret;
 	}
 };
