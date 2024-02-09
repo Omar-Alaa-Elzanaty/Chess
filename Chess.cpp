@@ -36,6 +36,14 @@ int main()
 	Board brd;
 	BoardServices brds;
 	brds.DisplayBoard(&brd); cout << '\n';
-
+	Piece BI = *brd.board[8][3];
+	BishopService().MakeMove(6, 5, &brd, &BI);
+	brds.DisplayBoard(&brd); cout << '\n';
+	//cout << BI.name;
+	BI = *brd.board[6][5];
+	brd.board[7][4]->name = " .  ";
+	Board valid = BishopService().AllValidMove(&brd, &BI);
+	brds.DisplayBoard(&valid); cout << '\n';
+	//cout << BI.row << ' ' << BI.column << '\n';
 
 }

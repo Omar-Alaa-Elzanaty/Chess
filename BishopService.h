@@ -181,10 +181,15 @@ class BishopService :public IPieceService
     Board GeneralBoard;
     void GetGeneralBoard(Board* board, Piece* piece) {
         GeneralBoard = board;
-        char ops = 'W' + 'B' - piece->name[0];
+       /* cout << "\n\nInSide\n\n\n";
+        BoardServices().DisplayBoard(&GeneralBoard); cout << "\n\n\n";*/
+        cout << piece->dRow.size() << '\n';
+        //cout << "\nDone make copy \n";
         for (int i = 0; i < 4; i++) {
-            int x = piece->row + piece->dRow[i];
+            int x = piece->row +piece->dRow[i];
+        //cout << "\n Test \n";
             int y = piece->column + piece->dColumn[i];
+        char ops = 'W' + 'B' - piece->name[0];
             while (x <= 8 and x and y and y <= 8) {
                 if (GeneralBoard.board[x][y]->name != " .  ") {
                     if (GeneralBoard.board[x][y]->name[0] == ops) {
@@ -206,6 +211,7 @@ public:
 
     bool  CanMove(Board* board, Piece* piece) {
         GetGeneralBoard(board, piece);
+        //cout << "\nDone GetGeneralBoard\n";
         king_check = KingCheck(board, piece);
         king_block = KingBlock(board, piece);
         if (king_check.size() > 0 and king_block.size() > 0)return false;
@@ -314,6 +320,7 @@ public:
     }
     Board AllValidMove(Board* board, Piece* piece) {
         CanMove(board, piece);
+        //cout << "\nDone CanMove\n";
         if (king_block.size() == 0 and king_check.size() == 0)
             return GeneralBoard;
         Board ret = *board;
@@ -440,12 +447,14 @@ public:
     Board MakeMove(int x, int y, Board* board, Piece* piece) {
         int xp = piece->row;
         int yp = piece->column;
-        board->board[x][y] = Piece().Clone(piece);
+        board->board[x][y]->Clone(piece);
         board->board[x][y]->row = x;
         board->board[x][y]->column = y;
+        Piece* rem = board->board[xp][yp];
         board->board[xp][yp] = new Piece();
         board->board[xp][yp]->row = xp;
         board->board[xp][yp]->column = yp;
+        delete rem;
         return *board;
     }
 };

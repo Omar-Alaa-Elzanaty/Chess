@@ -121,22 +121,22 @@ public:
 			
 	}
 
-	Board operator=(Board* newBoard) {
-		Board ret;
+	void operator=(Board* newBoard) {
+		//Board ret;
 		for (int i = 1; i < 9; i++) {
 			for (int j = 1; j < 9; j++) {
-				ret.board[i][j] = Piece().Clone(newBoard->board[i][j]);
+				this->board[i][j]->Clone(newBoard->board[i][j]);
+				// = Piece().Clone(newBoard->board[i][j]);
 			}
 		}
-		return ret;
+		//return ret;
 	}
-	Board operator=(Board newBoard) {
-		Board ret;
+	void operator=(Board newBoard) {
 		for (int i = 1; i < 9; i++) {
 			for (int j = 1; j < 9; j++) {
-				ret.board[i][j] = newBoard.board[i][j]->Clone(newBoard.board[i][j]);
+				board[i][j]->Clone(newBoard.board[i][j]);
+				//ret.board[i][j] = newBoard.board[i][j]->Clone(newBoard.board[i][j]);
 			}
 		}
-		return ret;
 	}
 };
