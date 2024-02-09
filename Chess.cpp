@@ -36,7 +36,7 @@ int main()
 {
 	Board brd;
 	BoardServices brds;
-	brds.DisplayBoard(&brd); cout << '\n';
+	//brds.DisplayBoard(&brd); cout << '\n';
 	Piece BI = *brd.board[8][3];
 	Piece BI2 = *brd.board[1][6];
 	Piece Ki = *brd.board[8][5];

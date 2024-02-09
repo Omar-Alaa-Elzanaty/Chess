@@ -334,7 +334,8 @@ public:
         if (king_block.size() == 0 and king_check.size() == 0)
             return GeneralBoard;
 
-        Board ret = *board;
+        Board ret;
+        ret = board;
         
         if (king_check.size()) {
             Piece ch = king_check[0];
