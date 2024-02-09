@@ -45,5 +45,6 @@ int main()
 	Board valid = BishopService().AllValidMove(&brd, &BI);
 	brds.DisplayBoard(&valid); cout << '\n';
 	//cout << BI.row << ' ' << BI.column << '\n';
+	brds.DisplayBoard(&brd); cout << '\n';
 
 }
