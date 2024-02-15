@@ -29,8 +29,8 @@ class Knight :public Piece
 {
 public:
 	Knight() {
-        this->dRow = new int[9];
-        this->dColumn = new int[9];
+        this->dRow.resize(9);
+        this->dColumn.resize(9);
         dRow[0] = 1; dColumn[0] = 2;
         dRow[1] = -1; dColumn[1] = -2;
         dRow[2] = -2; dColumn[2] = -1;
