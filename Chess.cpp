@@ -39,6 +39,6 @@ int main()
 	BoardServices().DisplayBoard(&xx);
 	cout << endl;
 	cout << x.CanMove(b,p) << endl;
-	Board xu = x.MakeMove(6,6,b,p);
+	Board xu = x.MakeMove(6,3,b,p);
 	BoardServices().DisplayBoard(&xu);
 }

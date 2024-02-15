@@ -35,7 +35,7 @@ public:
 		name = " .  ";
 	}
 	Piece* operator=(const Piece*& cur) {
-		Piece *ret = new Piece;
+		Piece* ret = new Piece;
 		ret->name = cur->name;
 		ret->Type = cur->Type;
 		ret->row = cur->row;

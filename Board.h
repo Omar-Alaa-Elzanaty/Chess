@@ -70,6 +70,7 @@ public:
 		}
 
 		for (int i = 1; i <= 8; i++) {
+			break;
 			board[2][i] = new Pawn;
 			board[2][i]->name = "BPA ";
 			board[2][i]->Type = _black;
@@ -105,6 +106,7 @@ public:
 		}
 
 		for (int i = 1; i <= 8; i++) {
+			break;
 			board[7][i] = new Pawn;
 			board[7][i]->name = "WPA ";
 			board[7][i]->Type = _white;
