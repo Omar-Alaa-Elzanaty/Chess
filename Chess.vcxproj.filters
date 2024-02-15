@@ -57,20 +57,29 @@
     <ClInclude Include="Bishop.h">
       <Filter>Header Files\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="King.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Board.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BishopService.h">
+      <Filter>Header Files\Services</Filter>
+    </ClInclude>
     <ClInclude Include="BoardServices.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Services</Filter>
     </ClInclude>
     <ClInclude Include="IKnightService.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Services</Filter>
     </ClInclude>
     <ClInclude Include="KnightService.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="PawnServices.h">
+      <Filter>Header Files\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="RookServices.h">
+      <Filter>Header Files\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="King.h">
+      <Filter>Header Files\Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -80,12 +89,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Chess.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="IKnightService.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="KnightService.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
