@@ -230,7 +230,8 @@ public:
 				se.emplace(idxx,idxy);
 			}
 		}
-		Board show = *board;
+		Board show;
+		show = board;
 		vector<pair<int, int>>kishplace = kish(board, piece);
 		if (kishplace.size() == 0) {
 			for (int i = 0; i < 8; i++) {
@@ -397,7 +398,8 @@ public:
 		}return false;
 	}
 	Board MakeMove(int x, int y,Board* board, Piece* piece){
-		Board temp = *board;
+		Board temp;
+		temp = board;
 		if (CanMove(board,piece)){
 			bool put = 0;
 			bool put2 = 0;
