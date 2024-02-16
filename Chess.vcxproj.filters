@@ -66,9 +66,6 @@
     <ClInclude Include="BoardServices.h">
       <Filter>Header Files\Services</Filter>
     </ClInclude>
-    <ClInclude Include="IKnightService.h">
-      <Filter>Header Files\Services</Filter>
-    </ClInclude>
     <ClInclude Include="KnightService.h">
       <Filter>Header Files\Services</Filter>
     </ClInclude>

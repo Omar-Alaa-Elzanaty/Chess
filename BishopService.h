@@ -320,7 +320,12 @@ public:
             if (ch.name == Mrg || ch.name == Mrg2) { return true; }
             return false;
         }
-        else return true;
+        else {
+            for (int i = 1; i < 9; i++)for (int j = 1; j < 9; j++) {
+                if (GeneralBoard.board[i][j]->name[3] == '*')return true;
+            }
+        }
+        return false;
     }
     Board AllValidMove(Board* board, Piece* piece) {
         if (!CanMove(board, piece))return *board;
