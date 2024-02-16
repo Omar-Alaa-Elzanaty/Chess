@@ -67,28 +67,28 @@ public:
 			Ch_y = 8 - Ch_y;
 			//cout << (int)Ch_x << ' ' << (int)Ch_y << '\n';
 			//continue;
-			Piece *Ch_p = MainBoard.board[Ch_x][Ch_y];
+			Piece* Ch_p = MainBoard.board[Ch_x][Ch_y];
 			if (Ch_p->name[0] != (turn ? 'W' : 'B')) {
 				cout << "Invalid piece\n\n";
 				continue;
 			}
 			IPieceService* Serviece = PASer;
-			if (Ch_p->name.substr(1,2) == "BI") {
+			if (Ch_p->name.substr(1, 2) == "BI") {
 				Serviece = BISer;
 			}
-			else if (Ch_p->name.substr(1,2) == "KI") {
+			else if (Ch_p->name.substr(1, 2) == "KI") {
 				Serviece = KISer;
 			}
-			else if (Ch_p->name.substr(1,2) == "KN") {
+			else if (Ch_p->name.substr(1, 2) == "KN") {
 				Serviece = KNSer;
 			}
-			else if (Ch_p->name.substr(1,2) == "PA") {
+			else if (Ch_p->name.substr(1, 2) == "PA") {
 				Serviece = PASer;
 			}
-			else if (Ch_p->name.substr(1,2) == "RO") {
+			else if (Ch_p->name.substr(1, 2) == "RO") {
 				Serviece = ROSer;
 			}
-			else if (Ch_p->name.substr(1,2) == "QU") {
+			else if (Ch_p->name.substr(1, 2) == "QU") {
 				//Serviece = QUSer; // yalaa ya  ameeeeeeeeeeeeer
 			}
 			else {
@@ -101,11 +101,48 @@ public:
 				continue;
 			}
 			Board ValidPos = Serviece->AllValidMove(&MainBoard, Ch_p);
+			cout << "\n\n";
 			BoardServices().DisplayBoard(&ValidPos);
+			cout << "\n\n";
+			int op = 3;
+			while (op >= 3) {
+				cout << "Chosse \n1 : Chose move possition\n2 : change piece\nyour chosse : ";
+				cin >> op;
+				if (op == 1) {
+					char newx, newy;
+					cout << "Chose poss [ x , y ]"; cin >> newx >> newy;
+					if (Valid_input(newx, newy)) {
+						newx -= '0';
+						newy -= 'A';// reset to base 1
+						newy = 8 - newy;
+						if (MainBoard.board[newx][newy]->name[0] != (turn ? 'W' : 'B') ||
+							MainBoard.board[newx][newy]->name[3] != '*') {
+							cout << "NOT VALID POSSITION\n\n";
+						}
+						else {
+							Serviece->MakeMove(newx, newy, &MainBoard, Ch_p);
+						}
+					}
+				}
+				else if (op == 2) {
+					break;
+				}
+				else {
+					op = 3; continue;
+				}
+			}
 
-			//ValidPos.Clear();   // to remove all pointers 
+			ValidPos.Clear();   // to remove all pointers 
 
+			turn ^= 1;
+			for (int i = 1; i < 9; i++) {
+				for (int j = 1; j < 9; j++) {
+					//if(MainBoard.board[i][j])   // check if game is finish of is running
+
+				}
+			}
 		}
+		cout << (turn ? "Black" : "White") << " is win !!\n\n";
 		//Reset color
 		cout << "\033[0m";
 	}
