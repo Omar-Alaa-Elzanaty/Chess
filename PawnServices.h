@@ -359,7 +359,8 @@ public:
 
 	Board AllValidMove(Board* myBoard, Piece* myPiece)
 	{
-		Board newBoard = *myBoard;
+		Board newBoard;
+		newBoard= myBoard;
 		vector<pair<int, int>>myChecks = Check(myBoard, myPiece);
 		vector<Piece*>myBlocks = Block(myBoard, myPiece);
 		vector<vector<string>>tempBoard = GetMyMoves(myBoard, myPiece);
@@ -564,7 +565,8 @@ public:
 
 	Board MakeMove(int x, int y, Board* myBoard, Piece* myPiece)
 	{
-		Board newBoard = *myBoard;
+		Board newBoard;
+		newBoard = myBoard;
 		int prevX = myPiece->row;
 		int prevY = myPiece->column;
 		if ((myPiece->name == "WPA " and x > 1) || (myPiece->name == "BPA " and x<8)) {
@@ -694,6 +696,7 @@ public:
 				}
 			}
 		}	
+		delete myBoard->board[prevX][prevY];
 		myBoard->board[prevX][prevY] = new Piece;
 		myBoard->board[prevX][prevY]->row = prevX;
 		myBoard->board[prevX][prevY]->column = prevY;

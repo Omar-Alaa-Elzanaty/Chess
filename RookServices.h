@@ -160,7 +160,6 @@ private:
 		}
 		return Blocks;
 	}
-public:
 	vector<vector<string>>GetMyMoves(Board* myBoard, Piece* myPiece)
 	{
 		vector<vector<string>>tempBoard(9, vector<string>(9,"XXX"));
@@ -193,7 +192,7 @@ public:
 		}
 		return tempBoard;
 	}
-	//CanMove(Board* myBoard , Piece* myPiece) : bool
+public:
 	bool CanMove(Board* myBoard, Piece* myPiece)
 	{
 		vector<pair<int, int>>myChecks = Check(myBoard, myPiece);
@@ -235,7 +234,7 @@ public:
 					int x = _xKing + Rook().dRow[i];
 					int y = _yKing + Rook().dColumn[i];
 					while (x and x < 9 and y and y < 9) {
-						if (myBoard->board[x][y] == temp) {
+						if (myBoard->board[x][y]->row == temp->row and myBoard->board[x][y]->column == temp->column) {
 							idx = i;
 							break;
 						}
@@ -264,7 +263,7 @@ public:
 					int x = _xKing + Bishop().dRow[i];
 					int y = _yKing + Bishop().dColumn[i];
 					while (x and x < 9 and y and y < 9) {
-						if (myBoard->board[x][y] == temp) {
+						if (myBoard->board[x][y]->row == temp->row and myBoard->board[x][y]->column == temp->column) {
 							idx = i;
 							break;
 						}
@@ -293,7 +292,7 @@ public:
 					int x = _xKing + Queen().dRow[i];
 					int y = _yKing + Queen().dColumn[i];
 					while (x and x < 9 and y and y < 9) {
-						if (myBoard->board[x][y] == temp) {
+						if (myBoard->board[x][y]->row == temp->row and myBoard->board[x][y]->column == temp->column) {
 							idx = i;
 							break;
 						}
@@ -326,7 +325,8 @@ public:
 	}
 	Board AllValidMove(Board* myBoard, Piece* myPiece)
 	{
-		Board newBoard = *myBoard;
+		Board newBoard;
+		newBoard= myBoard;
 		//newBoard= myBoard;
 		vector<vector<string>>myMoves = GetMyMoves(myBoard, myPiece);
 		vector<pair<int, int>>myChecks = Check(myBoard, myPiece);
@@ -547,6 +547,7 @@ public:
 		myBoard->board[x][y]->Type = myPiece->Type;
 		myBoard->board[x][y]->row = x;
 		myBoard->board[x][y]->column = y;
+		delete myBoard->board[prevX][prevY];
 		myBoard->board[prevX][prevY] = new Piece;
 		myBoard->board[prevX][prevY]->row = prevX;
 		myBoard->board[prevX][prevY]->column = prevY;
