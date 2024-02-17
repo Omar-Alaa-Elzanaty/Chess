@@ -57,9 +57,6 @@
     <ClInclude Include="Bishop.h">
       <Filter>Header Files\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="Board.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="BishopService.h">
       <Filter>Header Files\Services</Filter>
     </ClInclude>
@@ -79,6 +76,9 @@
       <Filter>Header Files\Services</Filter>
     </ClInclude>
     <ClInclude Include="King.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Board.h">
       <Filter>Header Files\Entities</Filter>
     </ClInclude>
   </ItemGroup>
