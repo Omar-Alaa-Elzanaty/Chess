@@ -144,7 +144,7 @@ public:
 		}
 		cout << (turn ? "Black" : "White") << " is win !!\n\n";
 		//Reset color
-		cout << "\033[0m";
+		cout << "\033[0m";	
 	}
 };
 
