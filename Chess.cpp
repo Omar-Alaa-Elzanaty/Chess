@@ -29,8 +29,10 @@
 #include"IKnightService.h"
 #include "RookServices.h"
 #include "PawnServices.h"
+#include "game.h"
 using namespace std;
 int main()
 {
-	
+	game ob;
+	ob.play();
 }
