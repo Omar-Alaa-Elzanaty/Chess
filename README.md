@@ -31,7 +31,7 @@ To make a move, simply specify the row and column of the piece you want to move.
 
 # Contributors :
 
-1. Eslam Aymen 
+1. Eslam Ayman 
 
 2. Ahmed Alamer
 
