@@ -1,3 +1,5 @@
+#pragma once
+#include "Board.h"
 #include <algorithm>
 #include <array>
 #include <bitset>
@@ -22,17 +24,11 @@
 #include <algorithm>
 #include <fstream>
 #include <bitset>
-#include "System.h"
-#include"BoardServices.h"
-#include"KnightService.h"
-#include"Knight.h"
-#include"IKnightService.h"
-#include "RookServices.h"
-#include "PawnServices.h"
-#include "game.h"
 using namespace std;
-int main()
+class IPieceService
 {
-	game ob;
-	ob.play();
-}
+public:
+	virtual bool  CanMove(Board* board, Piece* piece) = 0;
+	virtual Board AllValidMove(Board* board, Piece* piece) = 0;
+	virtual Board MakeMove(int x, int y, Board* board, Piece* piece) = 0;
+};

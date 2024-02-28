@@ -1,3 +1,5 @@
+#pragma once
+#include "Piece.h"
 #include <algorithm>
 #include <array>
 #include <bitset>
@@ -22,17 +24,20 @@
 #include <algorithm>
 #include <fstream>
 #include <bitset>
-#include "System.h"
-#include"BoardServices.h"
-#include"KnightService.h"
-#include"Knight.h"
-#include"IKnightService.h"
-#include "RookServices.h"
-#include "PawnServices.h"
-#include "game.h"
 using namespace std;
-int main()
+class Knight :public Piece
 {
-	game ob;
-	ob.play();
-}
+public:
+	Knight() {
+        this->dRow.resize(9);
+        this->dColumn.resize(9);
+        dRow[0] = 1; dColumn[0] = 2;
+        dRow[1] = -1; dColumn[1] = -2;
+        dRow[2] = -2; dColumn[2] = -1;
+        dRow[3] = 1; dColumn[3] = -2;
+        dRow[4] = 2; dColumn[4] = -1;
+        dRow[5] = -2; dColumn[5] = 1;
+        dRow[6] = 2; dColumn[6] = 1;
+        dRow[7] = -1; dColumn[7] = 2;
+	}
+};
