@@ -37,7 +37,7 @@ To make a move, simply specify the row and column of the piece you want to move.
 
 3. Omar ElSayed 
 
-4. Heba Eslam
+4. Hebatu allah Islam
 
 # Contribution :
 
